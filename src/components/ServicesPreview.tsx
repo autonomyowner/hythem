@@ -18,7 +18,7 @@ const categories: CategoryCard[] = [
       'Les essentiels pour affronter les saisons et maintenir votre corps résistant.',
     highlight: 'Défenses naturelles',
     image: '/unnamed (2).jpg',
-    href: '/products#immunite',
+    href: '/services',
   },
   {
     id: 'vitalite-energie',
@@ -27,7 +27,7 @@ const categories: CategoryCard[] = [
       'Solutions pour combattre la fatigue et optimiser la concentration mentale.',
     highlight: 'Énergie durable',
     image: '/unnamed (2).jpg',
-    href: '/products#vitalite',
+    href: '/services',
   },
   {
     id: 'sommeil-detente',
@@ -36,7 +36,7 @@ const categories: CategoryCard[] = [
       'Retrouvez un sommeil réparateur et gérez le stress du quotidien.',
     highlight: 'Bien-être quotidien',
     image: '/unnamed (2).jpg',
-    href: '/products#sommeil',
+    href: '/services',
   },
   {
     id: 'beaute-articulations',
@@ -45,7 +45,7 @@ const categories: CategoryCard[] = [
       'Compléments ciblés pour la peau, les cheveux et le confort articulaire.',
     highlight: 'Santé & beauté',
     image: '/unnamed (2).jpg',
-    href: '/products#beaute',
+    href: '/services',
   },
 ]
 

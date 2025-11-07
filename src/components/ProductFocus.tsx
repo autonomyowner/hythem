@@ -77,7 +77,7 @@ export const ProductFocus = (): JSX.Element => {
 
             <div>
               <Link
-                href="/products/immune-boost"
+                href="/services"
                 className="inline-flex rounded-full border border-kitchen-lux-dark-green-400 px-8 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-kitchen-lux-dark-green-700 transition-colors duration-200 hover:border-kitchen-lux-dark-green-600 hover:text-kitchen-lux-dark-green-800 hover:bg-kitchen-lux-dark-green-50"
               >
                 VOIR LA FICHE PRODUIT
