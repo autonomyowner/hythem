@@ -76,11 +76,11 @@ export const Navbar = (): JSX.Element => {
               className="transition-opacity duration-200 hover:opacity-80 text-center"
             >
               <span
-                className={`text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide uppercase transition-opacity duration-1000 ${
+                className={`text-4xl md:text-5xl lg:text-7xl font-artistic tracking-wide normal-case transition-opacity duration-1000 ${
                   isBrandVisible ? 'opacity-100' : 'opacity-50'
                 }`}
               >
-                <span className="text-kitchen-black-deep">Cel</span>
+                <span className="text-kitchen-black-deep">cel</span>
                 <span style={{ color: '#9AFE2E' }}>lavie</span>
               </span>
             </Link>

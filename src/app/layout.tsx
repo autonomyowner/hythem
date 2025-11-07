@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter, Playfair_Display, Great_Vibes } from 'next/font/google'
 import './globals.css'
 import { PromotionalBanner } from '@/components/PromotionalBanner'
 import { Navbar } from '@/components/Navbar'
@@ -14,6 +14,13 @@ const inter = Inter({
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
+  display: 'swap',
+})
+
+const greatVibes = Great_Vibes({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-great-vibes',
   display: 'swap',
 })
 
@@ -86,7 +93,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="fr" className={`${inter.variable} ${playfair.variable} ${greatVibes.variable}`}>
       <body
         className={`${inter.className} bg-gradient-elegant min-h-screen text-slate-900`}
       >

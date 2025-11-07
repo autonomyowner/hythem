@@ -74,6 +74,7 @@ module.exports = {
       fontFamily: {
         'elegant': ['Playfair Display', 'serif'],
         'modern': ['Inter', 'sans-serif'],
+        'artistic': ['Great Vibes', 'cursive'],
       },
       backgroundImage: {
         'gradient-elegant': 'linear-gradient(to bottom right, var(--tw-gradient-stops))',
