@@ -2,7 +2,7 @@
 
 export const PricingSection = (): JSX.Element => {
   const handleContactClick = (): void => {
-    const phoneNumber = '+213776797904'
+    const phoneNumber = '+213797339451'
     const message =
       'Bonjour! Je souhaite obtenir un devis pour vos services de decoration evennementielle.'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(

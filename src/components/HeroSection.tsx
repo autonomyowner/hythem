@@ -40,7 +40,7 @@ export const HeroSection = (): JSX.Element => {
   }, [isVisible])
 
   const handleContactClick = (): void => {
-    const phoneNumber = '+213776797904'
+    const phoneNumber = '+213797339451'
     const message =
       'Bonjour! Je suis interesse(e) par vos complements alimentaires Cellavie.'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(

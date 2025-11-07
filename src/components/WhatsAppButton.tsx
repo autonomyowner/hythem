@@ -15,7 +15,7 @@ export const WhatsAppButton = (): JSX.Element => {
   }, [])
 
   const handleWhatsAppClick = (): void => {
-    const phoneNumber = '+213776797904'
+    const phoneNumber = '+213797339451'
     const message = 'Bonjour! Je suis intéressé(e) par vos services de décoration événementielle.'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
