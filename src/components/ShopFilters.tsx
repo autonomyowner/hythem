@@ -13,23 +13,23 @@ type ShopFiltersProps = {
 }
 
 const productTypes: ProductType[] = [
-  'Gélules Végétales',
-  'Gummies',
-  'Liquides/Sérums',
-  'Poudres',
+  'Parfum Femme',
+  'Parfum Homme',
+  'Eau de Parfum',
+  'Eau de Toilette',
 ]
 
 const needs: ProductNeed[] = [
-  'Immunité',
-  'Vitalité/Énergie',
-  'Sommeil/Détente',
-  'Digestion',
+  'Journée',
+  'Soirée',
+  'Quotidien',
+  'Spécial',
 ]
 
 const priceRanges = [
-  { label: 'Moins de 30€', min: 0, max: 30 },
-  { label: '30€ - 50€', min: 30, max: 50 },
-  { label: 'Plus de 50€', min: 50, max: 1000 },
+  { label: 'Moins de 5000 DA', min: 0, max: 5000 },
+  { label: '5000 DA - 10000 DA', min: 5000, max: 10000 },
+  { label: 'Plus de 10000 DA', min: 10000, max: 100000 },
 ]
 
 export const ShopFilters = ({
@@ -125,11 +125,11 @@ export const ShopFilters = ({
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
-              checked={filters.brands.includes('Cellavie')}
-              onChange={() => toggleBrand('Cellavie')}
+              checked={filters.brands.includes('Brahim Perfum')}
+              onChange={() => toggleBrand('Brahim Perfum')}
               className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500 rounded"
             />
-            <span className="text-sm text-kitchen-lux-dark-green-700">Cellavie</span>
+            <span className="text-sm text-kitchen-lux-dark-green-700">Brahim Perfum</span>
           </label>
         </div>
       </div>
@@ -245,4 +245,5 @@ export const ShopFilters = ({
     </>
   )
 }
+
 

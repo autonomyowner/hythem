@@ -48,15 +48,15 @@ export const ProductGrid = ({
                 {product.originalPrice && product.originalPrice > product.price ? (
                   <>
                     <span className="text-lg font-semibold text-kitchen-lux-dark-green-800">
-                      {product.price.toFixed(2)}€
+                      {product.price.toLocaleString()} DA
                     </span>
                     <span className="text-sm text-kitchen-lux-dark-green-600 line-through">
-                      {product.originalPrice.toFixed(2)}€
+                      {product.originalPrice.toLocaleString()} DA
                     </span>
                   </>
                 ) : (
                   <span className="text-lg font-semibold text-kitchen-lux-dark-green-800">
-                    {product.price.toFixed(2)}€
+                    {product.price.toLocaleString()} DA
                   </span>
                 )}
               </div>
@@ -106,15 +106,15 @@ export const ProductGrid = ({
               {product.originalPrice && product.originalPrice > product.price ? (
                 <>
                   <span className="text-xl font-semibold text-kitchen-lux-dark-green-800">
-                    {product.price.toFixed(2)}€
+                    {product.price.toLocaleString()} DA
                   </span>
                   <span className="text-sm text-kitchen-lux-dark-green-600 line-through">
-                    {product.originalPrice.toFixed(2)}€
+                    {product.originalPrice.toLocaleString()} DA
                   </span>
                 </>
               ) : (
                 <span className="text-xl font-semibold text-kitchen-lux-dark-green-800">
-                  {product.price.toFixed(2)}€
+                  {product.price.toLocaleString()} DA
                 </span>
               )}
             </div>

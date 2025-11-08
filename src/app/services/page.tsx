@@ -4,22 +4,22 @@ import { useState, useMemo } from 'react'
 import { ProductGrid } from '@/components/ProductGrid'
 import { ShopFilters } from '@/components/ShopFilters'
 import { ProductControls } from '@/components/ProductControls'
-import { products, type FilterState, type SortOption } from '@/data/products'
+import { menPerfumes, type FilterState, type SortOption } from '@/data/products'
 
 export default function ShopPage(): JSX.Element {
   const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid')
   const [sortOption, setSortOption] = useState<SortOption>('best-sellers')
   const [filters, setFilters] = useState<FilterState>({
     availability: 'all',
-    brands: ['Cellavie'],
-    priceRange: { min: 0, max: 1000 },
+    brands: ['Brahim Perfum'],
+    priceRange: { min: 0, max: 100000 },
     productTypes: [],
     needs: [],
   })
 
   // Filter products
   const filteredProducts = useMemo(() => {
-    let result = [...products]
+    let result = [...menPerfumes]
 
     // Availability filter
     if (filters.availability === 'in-stock') {
@@ -85,8 +85,8 @@ export default function ShopPage(): JSX.Element {
 
   // Calculate product counts for filters
   const productCounts = useMemo(() => {
-    const inStock = products.filter((p) => p.inStock).length
-    const outOfStock = products.filter((p) => !p.inStock).length
+    const inStock = menPerfumes.filter((p) => p.inStock).length
+    const outOfStock = menPerfumes.filter((p) => !p.inStock).length
     return { inStock, outOfStock }
   }, [])
 
@@ -96,7 +96,7 @@ export default function ShopPage(): JSX.Element {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="mt-4 text-4xl font-elegant font-semibold text-kitchen-lux-dark-green-800 sm:text-5xl">
-            Nos Meilleures Ventes Cellavie
+            Parfums Homme - Collection Brahim Perfum
           </h1>
         </div>
 

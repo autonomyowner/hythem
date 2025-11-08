@@ -2,7 +2,7 @@
 
 export const CTASection = (): JSX.Element => {
   const handleWhatsAppClick = (): void => {
-    const phoneNumber = '+213797339451'
+    const phoneNumber = '+213673734578'
     const message =
       'Bonjour! Je souhaite discuter de mon projet de cuisine sur mesure.'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -12,7 +12,7 @@ export const CTASection = (): JSX.Element => {
   }
 
   const handlePhoneClick = (): void => {
-    window.open('tel:+213797339451', '_self')
+    window.open('tel:+213673734578', '_self')
   }
 
   const handleEmailClick = (): void => {

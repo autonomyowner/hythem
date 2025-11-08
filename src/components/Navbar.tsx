@@ -10,7 +10,7 @@ type NavItem = {
 }
 
 const navItems: NavItem[] = [
-  { label: 'Accueil', href: '/' },
+  { label: 'Boutique', href: '/' },
   { label: 'Boutique', href: '/services' },
 ]
 
@@ -80,8 +80,8 @@ export const Navbar = (): JSX.Element => {
                   isBrandVisible ? 'opacity-100' : 'opacity-50'
                 }`}
               >
-                <span className="text-kitchen-black-deep">cel</span>
-                <span style={{ color: '#9AFE2E' }}>lavie</span>
+                <span className="text-kitchen-black-deep">brahim</span>
+                <span className="text-kitchen-lux-dark-green-800"> perfum</span>
               </span>
             </Link>
           </div>
@@ -107,16 +107,16 @@ export const Navbar = (): JSX.Element => {
           </div>
 
           {/* Mobile menu items */}
-          {/* Accueil - Left side */}
+          {/* Boutique - Left side */}
           <div className="absolute left-0 top-1/2 -translate-y-1/2 md:hidden">
             {(() => {
               const isActive = pathname === leftNavItem.href
               return (
                 <Link
                   href={leftNavItem.href}
-                  className={`inline-flex items-center justify-center rounded-full border border-kitchen-lux-dark-green-300 bg-gradient-to-r from-kitchen-lux-dark-green-50 to-kitchen-lux-dark-green-100 px-2 py-1 text-[8px] font-semibold uppercase tracking-[0.3em] text-kitchen-lux-dark-green-800 transition-all duration-200 hover:border-kitchen-lux-dark-green-500 hover:bg-gradient-to-r hover:from-kitchen-lux-dark-green-100 hover:to-kitchen-lux-dark-green-200 hover:text-kitchen-lux-dark-green-900 hover:shadow-md hover:shadow-kitchen-lux-dark-green-200/30 ${
+                  className={`inline-flex items-center justify-center rounded-full border border-purple-300 bg-gradient-to-r from-purple-100 to-purple-200 px-2 py-1 text-[8px] font-semibold uppercase tracking-[0.3em] text-purple-800 transition-all duration-200 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-200 hover:to-purple-300 hover:text-purple-900 hover:shadow-md hover:shadow-purple-200/30 ${
                     isActive
-                      ? 'border-kitchen-lux-dark-green-500 bg-gradient-to-r from-kitchen-lux-dark-green-100 to-kitchen-lux-dark-green-200 text-kitchen-lux-dark-green-900 shadow-md shadow-kitchen-lux-dark-green-200/30'
+                      ? 'border-purple-500 bg-gradient-to-r from-purple-200 to-purple-300 text-purple-900 shadow-md shadow-purple-200/30'
                       : ''
                   }`}
                 >

@@ -40,9 +40,9 @@ export const HeroSection = (): JSX.Element => {
   }, [isVisible])
 
   const handleContactClick = (): void => {
-    const phoneNumber = '+213797339451'
+    const phoneNumber = '+213673734578'
     const message =
-      'Bonjour! Je suis interesse(e) par vos complements alimentaires Cellavie.'
+      'Bonjour! Je suis interesse(e) par vos complements alimentaires Brahim Perfum.'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message,
     )}`
@@ -94,7 +94,7 @@ export const HeroSection = (): JSX.Element => {
                 : 'translate-y-12 opacity-0'
             }`}
           >
-            Cellavie : L&apos;Équilibre Naturel au Cœur de Votre Vitalité.
+            Brahim Perfum : L&apos;Équilibre Naturel au Cœur de Votre Vitalité.
           </h1>
 
           <p 

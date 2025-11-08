@@ -42,15 +42,15 @@ export const ProductDetails = ({ product }: ProductDetailsProps): JSX.Element =>
           {product.originalPrice && product.originalPrice > product.price ? (
             <>
               <span className="text-3xl font-bold text-kitchen-lux-dark-green-800">
-                {product.price.toFixed(2)}€
+                {product.price.toLocaleString()} DA
               </span>
               <span className="text-lg text-kitchen-lux-dark-green-600 line-through">
-                {product.originalPrice.toFixed(2)}€
+                {product.originalPrice.toLocaleString()} DA
               </span>
             </>
           ) : (
             <span className="text-3xl font-bold text-kitchen-lux-dark-green-800">
-              {product.price.toFixed(2)}€
+              {product.price.toLocaleString()} DA
             </span>
           )}
         </div>
@@ -285,4 +285,5 @@ export const ProductDetails = ({ product }: ProductDetailsProps): JSX.Element =>
     </div>
   )
 }
+
 

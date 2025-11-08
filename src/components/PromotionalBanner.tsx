@@ -15,9 +15,7 @@ export const PromotionalBanner = (): JSX.Element => {
 
   const bannerContent = (
     <>
-      <span>UP TO 50% OFF</span>
-      <span className="hidden sm:inline">•</span>
-      <span>FREE SHIPPING ON ORDER $50+</span>
+      <span>livraision 58 willaya</span>
       <span className="mx-8">•</span>
     </>
   )
@@ -31,7 +29,7 @@ export const PromotionalBanner = (): JSX.Element => {
         background: 'linear-gradient(to right, #2E8B57 0%, #9AFE2E 50%, #2E8B57 100%)',
         minHeight: '44px', // Touch-friendly minimum height
       }}
-      aria-label="Promotional banner: UP TO 50% OFF and FREE SHIPPING ON ORDER $50+."
+      aria-label="Promotional banner: livraision 58 willaya"
       tabIndex={0}
     >
       <div className="relative w-full overflow-hidden h-full flex items-center">

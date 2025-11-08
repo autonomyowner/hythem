@@ -113,7 +113,7 @@ Le thème utilise un gradient élégant :
 Créez un fichier `.env.local` :
 ```env
 NEXT_PUBLIC_SITE_URL=https://cuisine-alger.com
-NEXT_PUBLIC_PHONE_NUMBER=+213797339451
+NEXT_PUBLIC_PHONE_NUMBER=+213673734578
 NEXT_PUBLIC_EMAIL=contact@cuisine-alger.com
 ```
 
