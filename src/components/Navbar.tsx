@@ -43,32 +43,32 @@ export const Navbar = (): JSX.Element => {
 
   return (
     <>
-      {/* Top Bar */}
-      <div className="fixed inset-x-0 top-0 z-50 bg-kitchen-white-clean border-b border-kitchen-marble-gray-light">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-10 items-center justify-between">
-            {/* Services - Left */}
-            <Link
-              href="/services"
-              className="text-xs font-medium uppercase tracking-[0.2em] text-kitchen-marble-gray transition-colors duration-200 hover:text-kitchen-black-deep"
-            >
-              Services
-            </Link>
-
-            {/* Sellers - Right */}
-            <Link
-              href="/sellers"
-              className="text-xs font-medium uppercase tracking-[0.2em] text-kitchen-marble-gray transition-colors duration-200 hover:text-kitchen-black-deep"
-            >
-              Sellers
-            </Link>
+      {/* Top Bar - Scrolling Banner */}
+      <div 
+        className="fixed inset-x-0 top-0 z-50 w-full text-black py-3 px-4 text-sm font-semibold block overflow-hidden"
+        style={{
+          background: 'linear-gradient(to right, #1E3F3D 0%, #F5FFF5 50%, #DCCEF2 100%)',
+          minHeight: '44px',
+        }}
+      >
+        <div className="relative w-full overflow-hidden h-full flex items-center">
+          <div className="animate-scroll-banner whitespace-nowrap inline-flex items-center gap-4">
+            <span className="font-modern tracking-wide">
+              Livraison 58 willayas - Paiement à la livraison
+            </span>
+            <span className="font-modern tracking-wide">
+              Livraison 58 willayas - Paiement à la livraison
+            </span>
+            <span className="font-modern tracking-wide">
+              Livraison 58 willayas - Paiement à la livraison
+            </span>
           </div>
         </div>
       </div>
 
       {/* Main Navbar */}
       <nav
-        className={`fixed inset-x-0 top-10 z-50 transition-colors duration-300 ${
+        className={`fixed inset-x-0 top-[44px] z-50 transition-colors duration-300 ${
           isScrolled
             ? 'bg-kitchen-white-clean/92 backdrop-blur border-b border-kitchen-marble-gray-light shadow-sm'
             : 'bg-transparent'

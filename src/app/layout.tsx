@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display, Great_Vibes } from 'next/font/google'
 import './globals.css'
-import { PromotionalBanner } from '@/components/PromotionalBanner'
 import { Navbar } from '@/components/Navbar'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 
