@@ -125,9 +125,20 @@ export const ShopFilters = ({
     updateFilter('brands', newBrands)
   }
 
-  const handleCategorySelect = (categoryId: string): void => {
+  const handleCategorySelect = (
+    categoryId: string,
+    options?: { closeDropdown?: boolean },
+  ): void => {
     setSelectedCategory(categoryId)
-    setIsCategoryOpen(false)
+    if (options?.closeDropdown !== false) {
+      setIsCategoryOpen(false)
+    }
+  }
+
+  const handleMobileCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ): void => {
+    handleCategorySelect(event.target.value, { closeDropdown: false })
   }
 
   const isCategorySelected = React.useCallback(
@@ -245,79 +256,106 @@ export const ShopFilters = ({
         <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-3">
           Catégorie
         </h3>
-        <div className="relative" ref={categoryRef}>
-          <button
-            type="button"
-            onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-            className="w-full flex items-center justify-between px-3 py-2 text-sm text-kitchen-lux-dark-green-700 bg-white border border-kitchen-lux-dark-green-200 rounded-lg hover:border-kitchen-lux-dark-green-400 focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500"
-          >
-            <span>{getSelectedCategoryLabel()}</span>
-            <svg
-              className={`w-4 h-4 transition-transform ${isCategoryOpen ? 'rotate-180' : ''}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+        <div className="space-y-3">
+          {/* Mobile Select */}
+          <div className="lg:hidden">
+            <label className="block text-xs font-medium text-kitchen-lux-dark-green-600 mb-2">
+              Choisir une catégorie
+            </label>
+            <select
+              value={selectedCategory}
+              onChange={handleMobileCategoryChange}
+              className="w-full rounded-lg border border-kitchen-lux-dark-green-200 bg-white px-3 py-2 text-sm text-kitchen-lux-dark-green-700 focus:border-kitchen-lux-dark-green-400 focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
-          {isCategoryOpen && (
-            <div className="absolute z-50 w-full mt-1 bg-white border border-kitchen-lux-dark-green-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
-              <div className="px-4 py-2 border-b border-kitchen-lux-dark-green-100 flex items-center justify-between gap-2">
-                <span className="text-xs font-medium uppercase tracking-[0.2em] text-kitchen-lux-dark-green-500">
-                  Catégories Marketplace
-                </span>
-                {selectedCategory && (
-                  <button
-                    type="button"
-                    onClick={() => handleCategorySelect('')}
-                    className="text-xs font-medium text-kitchen-lux-dark-green-600 hover:text-kitchen-lux-dark-green-800"
-                  >
-                    Effacer
-                  </button>
-                )}
-              </div>
+              <option value="">Toutes les catégories</option>
               {marketplaceCategories.map((category) => (
-                <div
-                  key={category.id}
-                  className="border-b border-kitchen-lux-dark-green-100 last:border-b-0"
-                >
-                  <button
-                    type="button"
-                    onClick={() => handleCategorySelect(category.id)}
-                    className={cn(
-                      'w-full text-left px-4 py-3 text-sm font-medium text-kitchen-lux-dark-green-800 hover:bg-kitchen-lux-dark-green-50 transition-colors',
-                      isCategorySelected(category.id) &&
-                        'bg-kitchen-lux-dark-green-50 text-kitchen-lux-dark-green-900',
-                    )}
-                  >
-                    {category.label}
-                  </button>
-                  <div className="pl-4 pb-2">
-                    {category.subcategories.map((subcategory, idx) => (
-                      <button
-                        key={subcategory}
-                        type="button"
-                        onClick={() => handleCategorySelect(`${category.id}-${idx}`)}
-                        className={cn(
-                          'w-full text-left px-4 py-2 text-xs text-kitchen-lux-dark-green-600 hover:bg-kitchen-lux-dark-green-50 transition-colors',
-                          isSubcategorySelected(category.id, idx) &&
-                            'bg-kitchen-lux-dark-green-50 text-kitchen-lux-dark-green-800 font-semibold',
-                        )}
-                      >
-                        {subcategory}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                <React.Fragment key={category.id}>
+                  <option value={category.id}>{category.label}</option>
+                  {category.subcategories.map((subcategory, idx) => (
+                    <option key={`${category.id}-${idx}`} value={`${category.id}-${idx}`}>
+                      {subcategory}
+                    </option>
+                  ))}
+                </React.Fragment>
               ))}
-            </div>
-          )}
+            </select>
+          </div>
+
+          {/* Desktop Dropdown */}
+          <div className="relative hidden lg:block" ref={categoryRef}>
+            <button
+              type="button"
+              onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+              className="w-full flex items-center justify-between px-3 py-2 text-sm text-kitchen-lux-dark-green-700 bg-white border border-kitchen-lux-dark-green-200 rounded-lg hover:border-kitchen-lux-dark-green-400 focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500"
+            >
+              <span>{getSelectedCategoryLabel()}</span>
+              <svg
+                className={`w-4 h-4 transition-transform ${isCategoryOpen ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            {isCategoryOpen && (
+              <div className="absolute z-50 w-full mt-1 bg-white border border-kitchen-lux-dark-green-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+                <div className="px-4 py-2 border-b border-kitchen-lux-dark-green-100 flex items-center justify-between gap-2">
+                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-kitchen-lux-dark-green-500">
+                    Catégories Marketplace
+                  </span>
+                  {selectedCategory && (
+                    <button
+                      type="button"
+                      onClick={() => handleCategorySelect('')}
+                      className="text-xs font-medium text-kitchen-lux-dark-green-600 hover:text-kitchen-lux-dark-green-800"
+                    >
+                      Effacer
+                    </button>
+                  )}
+                </div>
+                {marketplaceCategories.map((category) => (
+                  <div
+                    key={category.id}
+                    className="border-b border-kitchen-lux-dark-green-100 last:border-b-0"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => handleCategorySelect(category.id)}
+                      className={cn(
+                        'w-full text-left px-4 py-3 text-sm font-medium text-kitchen-lux-dark-green-800 hover:bg-kitchen-lux-dark-green-50 transition-colors',
+                        isCategorySelected(category.id) &&
+                          'bg-kitchen-lux-dark-green-50 text-kitchen-lux-dark-green-900',
+                      )}
+                    >
+                      {category.label}
+                    </button>
+                    <div className="pl-4 pb-2">
+                      {category.subcategories.map((subcategory, idx) => (
+                        <button
+                          key={subcategory}
+                          type="button"
+                          onClick={() => handleCategorySelect(`${category.id}-${idx}`)}
+                          className={cn(
+                            'w-full text-left px-4 py-2 text-xs text-kitchen-lux-dark-green-600 hover:bg-kitchen-lux-dark-green-50 transition-colors',
+                            isSubcategorySelected(category.id, idx) &&
+                              'bg-kitchen-lux-dark-green-50 text-kitchen-lux-dark-green-800 font-semibold',
+                          )}
+                        >
+                          {subcategory}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
