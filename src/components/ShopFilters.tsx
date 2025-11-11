@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { useState } from 'react'
-import type { ProductType, ProductNeed, FilterState } from '@/data/products'
+import type { ProductNeed, FilterState } from '@/data/products'
+import { cn } from '@/lib/utils'
 import { DualRangeSlider } from './DualRangeSlider'
 
 type ShopFiltersProps = {
@@ -14,27 +14,7 @@ type ShopFiltersProps = {
   }
 }
 
-const productTypes: ProductType[] = [
-  'Parfum Femme',
-  'Parfum Homme',
-  'Eau de Parfum',
-  'Eau de Toilette',
-]
-
-// Generic category labels for display
-const productTypeLabels: Record<ProductType, string> = {
-  'Parfum Femme': 'Femme',
-  'Parfum Homme': 'Homme',
-  'Eau de Parfum': 'Premium',
-  'Eau de Toilette': 'Classique',
-}
-
-const needs: ProductNeed[] = [
-  'Journée',
-  'Soirée',
-  'Quotidien',
-  'Spécial',
-]
+const needs: ProductNeed[] = ['Journée', 'Soirée', 'Quotidien', 'Spécial']
 
 // Generic use case labels for display
 const needLabels: Record<ProductNeed, string> = {
@@ -94,9 +74,9 @@ export const ShopFilters = ({
   onFiltersChange,
   productCounts,
 }: ShopFiltersProps): JSX.Element => {
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState<string>('')
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false)
+  const [isMobileOpen, setIsMobileOpen] = React.useState(false)
+  const [selectedCategory, setSelectedCategory] = React.useState<string>('')
+  const [isCategoryOpen, setIsCategoryOpen] = React.useState(false)
   const categoryRef = React.useRef<HTMLDivElement>(null)
 
   // Close dropdown when clicking outside
@@ -127,8 +107,10 @@ export const ShopFilters = ({
     onFiltersChange({ ...filters, [key]: value })
   }
 
-  const handlePriceChange = (value: [number, number]): void => {
-    updateFilter('priceRange', { min: value[0], max: value[1] })
+  const handlePriceChange = (range: number[]): void => {
+    if (range.length === 2) {
+      updateFilter('priceRange', { min: range[0], max: range[1] })
+    }
   }
 
   const toggleNeed = (need: ProductNeed): void => {
@@ -148,8 +130,20 @@ export const ShopFilters = ({
   const handleCategorySelect = (categoryId: string): void => {
     setSelectedCategory(categoryId)
     setIsCategoryOpen(false)
-    // You can add category filtering logic here if needed
   }
+
+  const isCategorySelected = React.useCallback(
+    (categoryId: string) =>
+      selectedCategory === categoryId ||
+      selectedCategory.startsWith(`${categoryId}-`),
+    [selectedCategory],
+  )
+
+  const isSubcategorySelected = React.useCallback(
+    (categoryId: string, index: number) =>
+      selectedCategory === `${categoryId}-${index}`,
+    [selectedCategory],
+  )
 
   const getSelectedCategoryLabel = (): string => {
     if (!selectedCategory) return 'Sélectionner une catégorie'
@@ -223,10 +217,12 @@ export const ShopFilters = ({
           <DualRangeSlider
             min={0}
             max={100000}
-            value={[filters.priceRange.min, filters.priceRange.max]}
-            onChange={handlePriceChange}
             step={100}
-            formatLabel={(val) => `${val.toLocaleString()} DA`}
+            minStepsBetweenThumbs={5}
+            value={[filters.priceRange.min, filters.priceRange.max]}
+            onValueChange={handlePriceChange}
+            labelPosition="top"
+            label={(val) => (val !== undefined ? `${val.toLocaleString()} DA` : '')}
           />
         </div>
       </div>
@@ -277,22 +273,47 @@ export const ShopFilters = ({
           </button>
           {isCategoryOpen && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-kitchen-lux-dark-green-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+              <div className="px-4 py-2 border-b border-kitchen-lux-dark-green-100 flex items-center justify-between gap-2">
+                <span className="text-xs font-medium uppercase tracking-[0.2em] text-kitchen-lux-dark-green-500">
+                  Catégories Marketplace
+                </span>
+                {selectedCategory && (
+                  <button
+                    type="button"
+                    onClick={() => handleCategorySelect('')}
+                    className="text-xs font-medium text-kitchen-lux-dark-green-600 hover:text-kitchen-lux-dark-green-800"
+                  >
+                    Effacer
+                  </button>
+                )}
+              </div>
               {marketplaceCategories.map((category) => (
-                <div key={category.id} className="border-b border-kitchen-lux-dark-green-100 last:border-b-0">
+                <div
+                  key={category.id}
+                  className="border-b border-kitchen-lux-dark-green-100 last:border-b-0"
+                >
                   <button
                     type="button"
                     onClick={() => handleCategorySelect(category.id)}
-                    className="w-full text-left px-4 py-3 text-sm font-medium text-kitchen-lux-dark-green-800 hover:bg-kitchen-lux-dark-green-50 transition-colors"
+                    className={cn(
+                      'w-full text-left px-4 py-3 text-sm font-medium text-kitchen-lux-dark-green-800 hover:bg-kitchen-lux-dark-green-50 transition-colors',
+                      isCategorySelected(category.id) &&
+                        'bg-kitchen-lux-dark-green-50 text-kitchen-lux-dark-green-900',
+                    )}
                   >
                     {category.label}
                   </button>
                   <div className="pl-4 pb-2">
                     {category.subcategories.map((subcategory, idx) => (
                       <button
-                        key={idx}
+                        key={subcategory}
                         type="button"
                         onClick={() => handleCategorySelect(`${category.id}-${idx}`)}
-                        className="w-full text-left px-4 py-2 text-xs text-kitchen-lux-dark-green-600 hover:bg-kitchen-lux-dark-green-50 transition-colors"
+                        className={cn(
+                          'w-full text-left px-4 py-2 text-xs text-kitchen-lux-dark-green-600 hover:bg-kitchen-lux-dark-green-50 transition-colors',
+                          isSubcategorySelected(category.id, idx) &&
+                            'bg-kitchen-lux-dark-green-50 text-kitchen-lux-dark-green-800 font-semibold',
+                        )}
                       >
                         {subcategory}
                       </button>

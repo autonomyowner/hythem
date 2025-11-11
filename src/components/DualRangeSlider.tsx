@@ -1,109 +1,84 @@
 'use client'
 
 import * as React from 'react'
+import * as SliderPrimitive from '@radix-ui/react-slider'
 import { cn } from '@/lib/utils'
 
-interface DualRangeSliderProps {
-  min: number
-  max: number
-  value: [number, number]
-  onChange: (value: [number, number]) => void
-  step?: number
-  className?: string
+interface DualRangeSliderProps
+  extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
   labelPosition?: 'top' | 'bottom'
-  formatLabel?: (value: number) => string
+  label?: (value: number | undefined, index: number) => React.ReactNode
 }
 
-const DualRangeSlider = React.forwardRef<HTMLDivElement, DualRangeSliderProps>(
+const DualRangeSlider = React.forwardRef<
+  React.ElementRef<typeof SliderPrimitive.Root>,
+  DualRangeSliderProps
+>(
   (
     {
       className,
-      min,
-      max,
-      value,
-      onChange,
-      step = 1,
+      label,
       labelPosition = 'top',
-      formatLabel = (val) => `${val} DA`,
+      min = 0,
+      max = 100,
+      value,
+      defaultValue,
       ...props
     },
     ref,
   ) => {
-    const [minVal, maxVal] = value
-    const minValRef = React.useRef<HTMLInputElement>(null)
-    const maxValRef = React.useRef<HTMLInputElement>(null)
-    const range = React.useRef<HTMLDivElement>(null)
-
-    const getPercent = React.useCallback(
-      (val: number) => Math.round(((val - min) / (max - min)) * 100),
-      [min, max],
-    )
-
-    React.useEffect(() => {
-      if (maxValRef.current) {
-        const minPercent = getPercent(minVal)
-        const maxPercent = getPercent(maxVal)
-
-        if (range.current) {
-          range.current.style.left = `${minPercent}%`
-          range.current.style.width = `${maxPercent - minPercent}%`
-        }
+    const fallbackValue = React.useMemo<number[]>(() => {
+      if (Array.isArray(value) && value.length === 2) {
+        return value as number[]
       }
-    }, [minVal, maxVal, getPercent])
+
+      if (Array.isArray(defaultValue) && defaultValue.length === 2) {
+        return defaultValue as number[]
+      }
+
+      return [Number(min), Number(max)]
+    }, [value, defaultValue, min, max])
+
+    const displayValues = (Array.isArray(value) ? value : fallbackValue) as number[]
 
     return (
-      <div ref={ref} className={cn('relative w-full', className)} {...props}>
-        <div className="relative h-2 w-full rounded-full bg-kitchen-lux-dark-green-200">
-          <div
-            ref={range}
-            className="absolute h-2 rounded-full bg-kitchen-lux-dark-green-600"
-          />
-        </div>
-        <div className="relative">
-          <input
-            type="range"
-            min={min}
-            max={max}
-            value={minVal}
-            step={step}
-            onChange={(e) => {
-              const value = Math.min(Number(e.target.value), maxVal - step)
-              onChange([value, maxVal])
-            }}
-            className="absolute h-0 w-full appearance-none bg-transparent z-10"
-            style={{ zIndex: minVal > max - 100 ? 20 : 10 }}
-          />
-          <input
-            type="range"
-            min={min}
-            max={max}
-            value={maxVal}
-            step={step}
-            onChange={(e) => {
-              const value = Math.max(Number(e.target.value), minVal + step)
-              onChange([minVal, value])
-            }}
-            className="absolute h-0 w-full appearance-none bg-transparent z-10"
-            style={{ zIndex: 10 }}
-          />
-        </div>
-        <div className="relative mt-4">
-          <div
-            className={cn(
-              'absolute flex w-full justify-between',
-              labelPosition === 'top' && '-top-7',
-              labelPosition === 'bottom' && 'top-4',
-            )}
+      <SliderPrimitive.Root
+        ref={ref}
+        className={cn(
+          'relative flex w-full touch-none select-none items-center',
+          className,
+        )}
+        min={min}
+        max={max}
+        value={value}
+        defaultValue={
+          defaultValue ?? (Array.isArray(value) ? undefined : fallbackValue)
+        }
+        {...props}
+      >
+        <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-kitchen-lux-dark-green-100">
+          <SliderPrimitive.Range className="absolute h-full bg-kitchen-lux-dark-green-600" />
+        </SliderPrimitive.Track>
+        {displayValues.map((thumbValue, index) => (
+          <SliderPrimitive.Thumb
+            key={index}
+            aria-label={index === 0 ? 'Valeur minimale' : 'Valeur maximale'}
+            className="relative block h-5 w-5 translate-x-[-50%] rounded-full border-2 border-kitchen-lux-dark-green-500 bg-white shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-kitchen-lux-dark-green-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
           >
-            <span className="text-xs font-medium text-kitchen-lux-dark-green-700 bg-white px-2 py-1 rounded border border-kitchen-lux-dark-green-200">
-              {formatLabel(minVal)}
-            </span>
-            <span className="text-xs font-medium text-kitchen-lux-dark-green-700 bg-white px-2 py-1 rounded border border-kitchen-lux-dark-green-200">
-              {formatLabel(maxVal)}
-            </span>
-          </div>
-        </div>
-      </div>
+            {label && (
+              <span
+                className={cn(
+                  'pointer-events-none absolute left-1/2 flex w-max -translate-x-1/2 rounded border border-kitchen-lux-dark-green-200 bg-white px-2 py-1 text-xs font-medium text-kitchen-lux-dark-green-700 shadow-sm',
+                  labelPosition === 'top' && '-top-8',
+                  labelPosition === 'bottom' && 'top-6',
+                )}
+              >
+                {label(thumbValue, index)}
+              </span>
+            )}
+          </SliderPrimitive.Thumb>
+        ))}
+      </SliderPrimitive.Root>
     )
   },
 )
