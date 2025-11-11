@@ -126,7 +126,7 @@ export const BudgetSlider = ({
             Économique
           </div>
           <div className="text-xs text-kitchen-lux-dark-green-600">
-            Jusqu'à 15,000 DA
+            Jusqu&apos;à 15,000 DA
           </div>
         </div>
 
