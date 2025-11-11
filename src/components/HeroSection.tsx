@@ -42,7 +42,7 @@ export const HeroSection = (): JSX.Element => {
   const handleContactClick = (): void => {
     const phoneNumber = '+213673734578'
     const message =
-      'Bonjour! Je suis interesse(e) par vos complements alimentaires Brahim Perfum.'
+      'Bonjour! Je suis interesse(e) par vos complements alimentaires ZST.'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message,
     )}`
@@ -94,7 +94,7 @@ export const HeroSection = (): JSX.Element => {
                 : 'translate-y-12 opacity-0'
             }`}
           >
-            Brahim Perfum : L&apos;Équilibre Naturel au Cœur de Votre Vitalité.
+            ZST : L&apos;Équilibre Naturel au Cœur de Votre Vitalité.
           </h1>
 
           <p 

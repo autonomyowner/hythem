@@ -62,7 +62,7 @@ export const ServicesPreview = (): JSX.Element => {
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-kitchen-lux-dark-green-700">
             Quel que soit votre style – feminin, masculin, unisexe ou rare – 
-            Brahim Perfum a la fragrance qu&apos;il vous faut. Explorez nos categories principales.
+            ZST a la fragrance qu&apos;il vous faut. Explorez nos categories principales.
           </p>
         </div>
 

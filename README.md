@@ -1,6 +1,6 @@
-# Brahim Perfum ❤️ - Website
+# ZST ❤️ - Website
 
-Un site web moderne et élégant pour Brahim Perfum, une parfumerie de luxe spécialisée dans les fragrances authentiques basée à Bouzareah, Algérie.
+Un site web moderne et élégant pour ZST, une parfumerie de luxe spécialisée dans les fragrances authentiques basée à Bouzareah, Algérie.
 
 ## 🚀 Technologies Utilisées
 
@@ -162,4 +162,4 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ---
 
-**Brahim Perfum ❤️** - Découvrez votre fragrance idéale parmi notre collection exclusive 
+**ZST ❤️** - Découvrez votre fragrance idéale parmi notre collection exclusive 

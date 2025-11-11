@@ -1,7 +1,7 @@
 {
   "name": "brahim-perfum",
   "version": "1.0.0",
-  "description": "Brahim Perfum - Parfums de luxe et fragrances authentiques à Bouzareah",
+  "description": "ZST - Parfums de luxe et fragrances authentiques à Bouzareah",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,9 +10,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "next": "^15.4.5",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

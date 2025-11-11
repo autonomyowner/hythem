@@ -1,7 +1,9 @@
 'use client'
 
+import * as React from 'react'
 import { useState } from 'react'
 import type { ProductType, ProductNeed, FilterState } from '@/data/products'
+import { DualRangeSlider } from './DualRangeSlider'
 
 type ShopFiltersProps = {
   filters: FilterState
@@ -19,6 +21,14 @@ const productTypes: ProductType[] = [
   'Eau de Toilette',
 ]
 
+// Generic category labels for display
+const productTypeLabels: Record<ProductType, string> = {
+  'Parfum Femme': 'Femme',
+  'Parfum Homme': 'Homme',
+  'Eau de Parfum': 'Premium',
+  'Eau de Toilette': 'Classique',
+}
+
 const needs: ProductNeed[] = [
   'Journée',
   'Soirée',
@@ -26,10 +36,57 @@ const needs: ProductNeed[] = [
   'Spécial',
 ]
 
-const priceRanges = [
-  { label: 'Moins de 5000 DA', min: 0, max: 5000 },
-  { label: '5000 DA - 10000 DA', min: 5000, max: 10000 },
-  { label: 'Plus de 10000 DA', min: 10000, max: 100000 },
+// Generic use case labels for display
+const needLabels: Record<ProductNeed, string> = {
+  'Journée': 'Usage quotidien',
+  'Soirée': 'Occasions spéciales',
+  'Quotidien': 'Tous les jours',
+  'Spécial': 'Événements',
+}
+
+// Marketplace categories
+const marketplaceCategories = [
+  {
+    id: 'electronics',
+    label: 'Électronique & Technologie',
+    subcategories: [
+      'Téléphones & Accessoires',
+      'Informatique',
+      'Électroménager & Électronique',
+    ],
+  },
+  {
+    id: 'transportation',
+    label: 'Transport & Pièces',
+    subcategories: [
+      'Automobiles & Véhicules',
+      'Pièces détachées',
+    ],
+  },
+  {
+    id: 'home',
+    label: 'Maison, Jardin & Meubles',
+    subcategories: [
+      'Meubles & Maison',
+      'Matériaux & Équipement',
+    ],
+  },
+  {
+    id: 'personal',
+    label: 'Bien-être & Mode',
+    subcategories: [
+      'Vêtements & Mode',
+      'Santé & Beauté',
+    ],
+  },
+  {
+    id: 'lifestyle',
+    label: 'Loisirs & Divertissements',
+    subcategories: [
+      'Loisirs & Divertissements',
+      'Sport',
+    ],
+  },
 ]
 
 export const ShopFilters = ({
@@ -38,6 +95,30 @@ export const ShopFilters = ({
   productCounts,
 }: ShopFiltersProps): JSX.Element => {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState<string>('')
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false)
+  const categoryRef = React.useRef<HTMLDivElement>(null)
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent): void => {
+      if (
+        categoryRef.current &&
+        !categoryRef.current.contains(event.target as Node) &&
+        isCategoryOpen
+      ) {
+        setIsCategoryOpen(false)
+      }
+    }
+
+    if (isCategoryOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isCategoryOpen])
 
   const updateFilter = <K extends keyof FilterState>(
     key: K,
@@ -46,11 +127,8 @@ export const ShopFilters = ({
     onFiltersChange({ ...filters, [key]: value })
   }
 
-  const toggleProductType = (type: ProductType): void => {
-    const newTypes = filters.productTypes.includes(type)
-      ? filters.productTypes.filter((t) => t !== type)
-      : [...filters.productTypes, type]
-    updateFilter('productTypes', newTypes)
+  const handlePriceChange = (value: [number, number]): void => {
+    updateFilter('priceRange', { min: value[0], max: value[1] })
   }
 
   const toggleNeed = (need: ProductNeed): void => {
@@ -67,8 +145,30 @@ export const ShopFilters = ({
     updateFilter('brands', newBrands)
   }
 
-  const setPriceRange = (min: number, max: number): void => {
-    updateFilter('priceRange', { min, max })
+  const handleCategorySelect = (categoryId: string): void => {
+    setSelectedCategory(categoryId)
+    setIsCategoryOpen(false)
+    // You can add category filtering logic here if needed
+  }
+
+  const getSelectedCategoryLabel = (): string => {
+    if (!selectedCategory) return 'Sélectionner une catégorie'
+    
+    // Check if it's a subcategory (format: categoryId-index)
+    if (selectedCategory.includes('-')) {
+      const [categoryId, indexStr] = selectedCategory.split('-')
+      const category = marketplaceCategories.find((c) => c.id === categoryId)
+      if (category && indexStr) {
+        const index = parseInt(indexStr, 10)
+        if (!isNaN(index) && category.subcategories[index]) {
+          return category.subcategories[index]
+        }
+      }
+    }
+    
+    // Otherwise it's a main category
+    const category = marketplaceCategories.find((c) => c.id === selectedCategory)
+    return category?.label || 'Sélectionner une catégorie'
   }
 
   const FilterContent = () => (
@@ -114,6 +214,21 @@ export const ShopFilters = ({
             </span>
           </label>
         </div>
+
+        {/* Prix Range Slider */}
+        <div className="mt-6 pt-6 border-t border-kitchen-lux-dark-green-200">
+          <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-4">
+            Prix
+          </h3>
+          <DualRangeSlider
+            min={0}
+            max={100000}
+            value={[filters.priceRange.min, filters.priceRange.max]}
+            onChange={handlePriceChange}
+            step={100}
+            formatLabel={(val) => `${val.toLocaleString()} DA`}
+          />
+        </div>
       </div>
 
       {/* Marque */}
@@ -125,63 +240,75 @@ export const ShopFilters = ({
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
-              checked={filters.brands.includes('Brahim Perfum')}
-              onChange={() => toggleBrand('Brahim Perfum')}
+              checked={filters.brands.includes('ZST')}
+              onChange={() => toggleBrand('ZST')}
               className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500 rounded"
             />
-            <span className="text-sm text-kitchen-lux-dark-green-700">Brahim Perfum</span>
+            <span className="text-sm text-kitchen-lux-dark-green-700">ZST</span>
           </label>
         </div>
       </div>
 
-      {/* Prix */}
+      {/* Catégorie - Dropdown */}
       <div>
         <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-3">
-          Prix
+          Catégorie
         </h3>
-        <div className="space-y-2">
-          {priceRanges.map((range) => (
-            <label key={range.label} className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="priceRange"
-                checked={
-                  filters.priceRange.min === range.min &&
-                  filters.priceRange.max === range.max
-                }
-                onChange={() => setPriceRange(range.min, range.max)}
-                className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500"
+        <div className="relative" ref={categoryRef}>
+          <button
+            type="button"
+            onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+            className="w-full flex items-center justify-between px-3 py-2 text-sm text-kitchen-lux-dark-green-700 bg-white border border-kitchen-lux-dark-green-200 rounded-lg hover:border-kitchen-lux-dark-green-400 focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500"
+          >
+            <span>{getSelectedCategoryLabel()}</span>
+            <svg
+              className={`w-4 h-4 transition-transform ${isCategoryOpen ? 'rotate-180' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
               />
-              <span className="text-sm text-kitchen-lux-dark-green-700">{range.label}</span>
-            </label>
-          ))}
+            </svg>
+          </button>
+          {isCategoryOpen && (
+            <div className="absolute z-50 w-full mt-1 bg-white border border-kitchen-lux-dark-green-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+              {marketplaceCategories.map((category) => (
+                <div key={category.id} className="border-b border-kitchen-lux-dark-green-100 last:border-b-0">
+                  <button
+                    type="button"
+                    onClick={() => handleCategorySelect(category.id)}
+                    className="w-full text-left px-4 py-3 text-sm font-medium text-kitchen-lux-dark-green-800 hover:bg-kitchen-lux-dark-green-50 transition-colors"
+                  >
+                    {category.label}
+                  </button>
+                  <div className="pl-4 pb-2">
+                    {category.subcategories.map((subcategory, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => handleCategorySelect(`${category.id}-${idx}`)}
+                        className="w-full text-left px-4 py-2 text-xs text-kitchen-lux-dark-green-600 hover:bg-kitchen-lux-dark-green-50 transition-colors"
+                      >
+                        {subcategory}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Type de Produit */}
+      {/* Usage */}
       <div>
         <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-3">
-          Type de Produit
-        </h3>
-        <div className="space-y-2">
-          {productTypes.map((type) => (
-            <label key={type} className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={filters.productTypes.includes(type)}
-                onChange={() => toggleProductType(type)}
-                className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500 rounded"
-              />
-              <span className="text-sm text-kitchen-lux-dark-green-700">{type}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Besoin */}
-      <div>
-        <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-3">
-          Besoin
+          Usage
         </h3>
         <div className="space-y-2">
           {needs.map((need) => (
@@ -192,7 +319,7 @@ export const ShopFilters = ({
                 onChange={() => toggleNeed(need)}
                 className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500 rounded"
               />
-              <span className="text-sm text-kitchen-lux-dark-green-700">{need}</span>
+              <span className="text-sm text-kitchen-lux-dark-green-700">{needLabels[need]}</span>
             </label>
           ))}
         </div>

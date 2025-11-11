@@ -36,7 +36,7 @@ export const QualityCommitment = (): JSX.Element => {
             Excellence et Authenticite
           </h2>
           <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-kitchen-lux-dark-green-700">
-            Chez Brahim Perfum, nous croyons que l&apos;elegance commence par l&apos;authenticite des fragrances. 
+            Chez ZST, nous croyons que l&apos;elegance commence par l&apos;authenticite des fragrances. 
             C&apos;est pourquoi nous nous engageons a vous offrir des parfums de luxe qui allient le meilleur 
             de la parfumerie mondiale, avec une exigence de qualite sans compromis.
           </p>
@@ -46,7 +46,7 @@ export const QualityCommitment = (): JSX.Element => {
           <div className="relative w-full max-w-4xl aspect-[16/9] overflow-hidden rounded-[32px] border border-kitchen-lux-dark-green-200 bg-gradient-to-br from-kitchen-lux-dark-green-50 to-kitchen-lux-dark-green-100 shadow-lg">
             <Image
               src="/unnamed (1).jpg"
-              alt="Brahim Perfum - Collection de parfums de luxe"
+              alt="ZST - Collection de parfums de luxe"
               fill
               className="object-cover"
             />

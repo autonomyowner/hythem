@@ -15,8 +15,7 @@ export const PromotionalBanner = (): JSX.Element => {
 
   const bannerContent = (
     <>
-      <span>livraision 58 willaya</span>
-      <span className="mx-8">•</span>
+      {/* Delivery message removed */}
     </>
   )
 

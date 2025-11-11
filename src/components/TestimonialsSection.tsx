@@ -7,7 +7,7 @@ export const TestimonialsSection = (): JSX.Element => {
             Découvrez notre produit
           </p>
           <h2 className="mt-5 text-4xl font-elegant font-semibold text-kitchen-lux-dark-green-800 sm:text-5xl">
-            Brahim Perfum Collection
+            ZST Collection
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-kitchen-lux-dark-green-700">
             Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques.

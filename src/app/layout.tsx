@@ -25,14 +25,14 @@ const greatVibes = Great_Vibes({
 })
 
 export const metadata: Metadata = {
-  title: 'Brahim Perfum - Parfums de luxe et fragrances authentiques a Bouzareah',
+  title: 'ZST - Parfums de luxe et fragrances authentiques a Bouzareah',
   description:
     'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
   keywords:
     'parfum, parfums de luxe, fragrances authentiques, eau de parfum, parfum original, Bouzareah, parfumerie, fragrances rares, parfums importes',
-  authors: [{ name: 'Brahim Perfum' }],
-  creator: 'Brahim Perfum',
-  publisher: 'Brahim Perfum',
+  authors: [{ name: 'ZST' }],
+  creator: 'ZST',
+  publisher: 'ZST',
   icons: {
     icon: '/picturs/logo2.jpg',
     shortcut: '/picturs/logo2.jpg',
@@ -48,17 +48,17 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Brahim Perfum - Parfums de luxe et fragrances authentiques a Bouzareah',
+    title: 'ZST - Parfums de luxe et fragrances authentiques a Bouzareah',
     description:
       'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
     url: 'https://brahim-perfum.com',
-    siteName: 'Brahim Perfum',
+    siteName: 'ZST',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Brahim Perfum - Parfums de luxe et fragrances authentiques a Bouzareah',
+        alt: 'ZST - Parfums de luxe et fragrances authentiques a Bouzareah',
       },
     ],
     locale: 'fr_DZ',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Brahim Perfum - Parfums de luxe et fragrances authentiques a Bouzareah',
+    title: 'ZST - Parfums de luxe et fragrances authentiques a Bouzareah',
     description:
       'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
     images: ['/og-image.jpg'],
@@ -97,7 +97,6 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-gradient-elegant min-h-screen text-slate-900`}
       >
-        <PromotionalBanner />
         <Navbar />
         <main className="pt-28 md:pt-32 pb-20">{children}</main>
         <footer 
