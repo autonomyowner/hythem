@@ -102,9 +102,9 @@ export const Navbar = (): JSX.Element => {
 
           {/* Right menu items - Desktop only */}
           <div className="hidden items-end gap-2 md:flex flex-col flex-1 justify-end">
-            {/* Sign In Button with Logo - Right side */}
+            {/* Sign Up Button with Logo - Right side */}
             <Link
-              href="/signin"
+              href="/signup"
               className="inline-flex items-center gap-2 rounded-full border border-purple-300 bg-gradient-to-r from-purple-100 to-purple-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-purple-800 transition-all duration-200 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-200 hover:to-purple-300 hover:text-purple-900 hover:shadow-md hover:shadow-purple-200/30"
             >
               <Image
@@ -114,7 +114,7 @@ export const Navbar = (): JSX.Element => {
                 height={20}
                 className="rounded-full object-cover"
               />
-              <span>Sign In</span>
+              <span>Sign Up</span>
             </Link>
             {rightNavItems.map((item) => {
               const isActive = pathname === item.href
@@ -137,9 +137,9 @@ export const Navbar = (): JSX.Element => {
           {/* Mobile menu items */}
           {/* Boutique - Left side */}
           <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-start gap-1 md:hidden">
-            {/* Sign In Button with Logo - Mobile Left */}
+            {/* Sign Up Button with Logo - Mobile Left */}
             <Link
-              href="/signin"
+              href="/signup"
               className="inline-flex items-center gap-1 rounded-full border border-purple-300 bg-gradient-to-r from-purple-100 to-purple-200 px-2 py-1 text-[8px] font-semibold uppercase tracking-[0.2em] text-purple-800 transition-all duration-200 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-200 hover:to-purple-300 hover:text-purple-900 hover:shadow-md hover:shadow-purple-200/30"
             >
               <Image
@@ -149,7 +149,7 @@ export const Navbar = (): JSX.Element => {
                 height={14}
                 className="rounded-full object-cover"
               />
-              <span>Sign In</span>
+              <span>Sign Up</span>
             </Link>
             {(() => {
               const isActive = pathname === leftNavItem.href
