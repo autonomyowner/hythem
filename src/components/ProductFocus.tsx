@@ -25,7 +25,7 @@ export const ProductFocus = (): JSX.Element => {
             Le produit à l&apos;honneur
           </p>
           <h2 className="mt-5 text-4xl font-elegant font-semibold text-kitchen-lux-dark-green-800 sm:text-5xl">
-            Collection Signature ZST
+            Collection Signature WinterDZ
           </h2>
           <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-kitchen-lux-dark-green-700">
             Pour chaque moment de votre vie et chaque occasion, votre personnalite merite la fragrance parfaite. 
@@ -38,7 +38,7 @@ export const ProductFocus = (): JSX.Element => {
             <div className="relative aspect-[4/3] bg-neutral-100 flex items-center justify-center">
               <Image
                 src="/unnamed (2).jpg"
-                alt="ZST - Collection de parfums de luxe"
+                alt="WinterDZ - Collection de parfums de luxe"
                 fill
                 className="object-cover"
               />

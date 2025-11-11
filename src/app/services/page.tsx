@@ -11,7 +11,7 @@ export default function ShopPage(): JSX.Element {
   const [sortOption, setSortOption] = useState<SortOption>('best-sellers')
   const [filters, setFilters] = useState<FilterState>({
     availability: 'all',
-    brands: ['ZST'],
+    brands: ['WinterDZ'],
     priceRange: { min: 0, max: 100000 },
     productTypes: [],
     needs: [],
@@ -96,7 +96,7 @@ export default function ShopPage(): JSX.Element {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="mt-4 text-4xl font-elegant font-semibold text-kitchen-lux-dark-green-800 sm:text-5xl">
-            Marketplace - Collection ZST
+            Marketplace - Collection WinterDZ
           </h1>
         </div>
 

@@ -14,14 +14,14 @@ type ShopFiltersProps = {
   }
 }
 
-const needs: ProductNeed[] = ['Journée', 'Soirée', 'Quotidien', 'Spécial']
+const needs: ProductNeed[] = ['Hiver', 'Quotidien', 'Sport', 'Élégant']
 
 // Generic use case labels for display
 const needLabels: Record<ProductNeed, string> = {
-  'Journée': 'Usage quotidien',
-  'Soirée': 'Occasions spéciales',
-  'Quotidien': 'Tous les jours',
-  'Spécial': 'Événements',
+  'Hiver': 'Pour l\'hiver',
+  'Quotidien': 'Usage quotidien',
+  'Sport': 'Sport & Activités',
+  'Élégant': 'Style élégant',
 }
 
 // Marketplace categories
@@ -242,11 +242,11 @@ export const ShopFilters = ({
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
-              checked={filters.brands.includes('ZST')}
-              onChange={() => toggleBrand('ZST')}
+              checked={filters.brands.includes('WinterDZ')}
+              onChange={() => toggleBrand('WinterDZ')}
               className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500 rounded"
             />
-            <span className="text-sm text-kitchen-lux-dark-green-700">ZST</span>
+            <span className="text-sm text-kitchen-lux-dark-green-700">WinterDZ</span>
           </label>
         </div>
       </div>

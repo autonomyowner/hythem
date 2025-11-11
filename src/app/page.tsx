@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Image from 'next/image'
 import { ProductGrid } from '@/components/ProductGrid'
 import { ShopFilters } from '@/components/ShopFilters'
 import { ProductControls } from '@/components/ProductControls'
@@ -11,7 +12,7 @@ export default function HomePage(): JSX.Element {
   const [sortOption, setSortOption] = useState<SortOption>('best-sellers')
   const [filters, setFilters] = useState<FilterState>({
     availability: 'all',
-    brands: ['ZST'],
+    brands: ['WinterDZ'],
     priceRange: { min: 0, max: 100000 },
     productTypes: [],
     needs: [],
@@ -96,8 +97,20 @@ export default function HomePage(): JSX.Element {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="mt-4 text-4xl font-elegant font-semibold text-kitchen-lux-dark-green-800 sm:text-5xl">
-            Marketplace - Collection ZST
+            Marketplace - Collection WinterDZ
           </h1>
+          {/* Logo */}
+          <div className="flex justify-center mt-8">
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48">
+              <Image
+                src="/WINTERDZ.png"
+                alt="WinterDZ Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
         </div>
 
         {/* Main Content */}

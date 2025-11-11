@@ -25,18 +25,18 @@ const greatVibes = Great_Vibes({
 })
 
 export const metadata: Metadata = {
-  title: 'ZST - Parfums de luxe et fragrances authentiques a Bouzareah',
+  title: 'WinterDZ - Vêtements pour Algériens',
   description:
     'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
   keywords:
     'parfum, parfums de luxe, fragrances authentiques, eau de parfum, parfum original, Bouzareah, parfumerie, fragrances rares, parfums importes',
-  authors: [{ name: 'ZST' }],
-  creator: 'ZST',
-  publisher: 'ZST',
+  authors: [{ name: 'WinterDZ' }],
+  creator: 'WinterDZ',
+  publisher: 'WinterDZ',
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    icon: '/WINTERDZ.png',
+    shortcut: '/WINTERDZ.png',
+    apple: '/WINTERDZ.png',
   },
   formatDetection: {
     email: false,
@@ -48,17 +48,17 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'ZST - Parfums de luxe et fragrances authentiques a Bouzareah',
+    title: 'WinterDZ - Vêtements pour Algériens',
     description:
       'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
     url: 'https://brahim-perfum.com',
-    siteName: 'ZST',
+    siteName: 'WinterDZ',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'ZST - Parfums de luxe et fragrances authentiques a Bouzareah',
+        alt: 'WinterDZ - Vêtements pour Algériens',
       },
     ],
     locale: 'fr_DZ',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ZST - Parfums de luxe et fragrances authentiques a Bouzareah',
+    title: 'WinterDZ - Vêtements pour Algériens',
     description:
       'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
     images: ['/og-image.jpg'],

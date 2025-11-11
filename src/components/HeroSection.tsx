@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export const HeroSection = (): JSX.Element => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const [elementsVisible, setElementsVisible] = useState<{
+    logo: boolean
     subtitle: boolean
     title: boolean
     buttons: boolean
     footer: boolean
   }>({
+    logo: false,
     subtitle: false,
     title: false,
     buttons: false,
@@ -25,6 +28,7 @@ export const HeroSection = (): JSX.Element => {
   useEffect(() => {
     if (isVisible) {
       const delays = {
+        logo: 100,
         subtitle: 200,
         title: 400,
         buttons: 600,
@@ -42,7 +46,7 @@ export const HeroSection = (): JSX.Element => {
   const handleContactClick = (): void => {
     const phoneNumber = '+213673734578'
     const message =
-      'Bonjour! Je suis interesse(e) par vos complements alimentaires ZST.'
+      'Bonjour! Je suis interesse(e) par vos vêtements WinterDZ.'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message,
     )}`
@@ -77,6 +81,25 @@ export const HeroSection = (): JSX.Element => {
 
       <div className="mx-auto flex min-h-[80vh] max-w-6xl flex-col justify-center px-4 py-28 sm:px-6 lg:px-8 lg:py-36">
         <div className="max-w-3xl space-y-8">
+          {/* Logo */}
+          <div 
+            className={`flex justify-center transition-all duration-700 ease-out ${
+              elementsVisible.logo
+                ? 'translate-y-0 opacity-100 scale-100'
+                : 'translate-y-8 opacity-0 scale-95'
+            }`}
+          >
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64">
+              <Image
+                src="/WINTERDZ.png"
+                alt="WinterDZ Logo"
+                fill
+                className="object-contain drop-shadow-2xl"
+                priority
+              />
+            </div>
+          </div>
+
           <p 
             className={`text-xs uppercase tracking-[0.4em] text-white/80 transition-all duration-700 ease-out ${
               elementsVisible.subtitle
@@ -84,7 +107,7 @@ export const HeroSection = (): JSX.Element => {
                 : 'translate-y-8 opacity-0'
             }`}
           >
-            Des Compléments Alimentaires haut de gamme, formulés en France, pour optimiser votre bien-être jour après jour.
+            Des vêtements de qualité pour Algériens, conçus avec passion pour votre style et votre confort.
           </p>
 
           <h1 
@@ -94,7 +117,7 @@ export const HeroSection = (): JSX.Element => {
                 : 'translate-y-12 opacity-0'
             }`}
           >
-            ZST : L&apos;Équilibre Naturel au Cœur de Votre Vitalité.
+            WinterDZ : Vêtements pour Algériens, Style et Élégance à Votre Image.
           </h1>
 
           <p 
@@ -105,7 +128,7 @@ export const HeroSection = (): JSX.Element => {
             }`}
             style={{ transitionDelay: '200ms' }}
           >
-            Découvrez nos solutions basées sur la science, conçues pour vous.
+            Découvrez notre collection de vêtements spécialement conçus pour les Algériens.
           </p>
 
 

@@ -17,7 +17,7 @@ export default function SignInPage() {
     <div 
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-white to-kitchen-lux-dark-green-50 px-4 py-12 relative"
       style={{
-        backgroundImage: 'url(/logo.png)',
+        backgroundImage: 'url(/WINTERDZ.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -113,18 +113,22 @@ export default function SignInPage() {
 
           {/* Social Sign In */}
           <div className="grid grid-cols-2 gap-4">
-            <button
-              type="button"
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <span className="text-sm font-medium">Google</span>
-            </button>
-            <button
-              type="button"
+              <span className="text-sm font-medium">Instagram</span>
+            </a>
+            <a
+              href="https://www.tiktok.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <span className="text-sm font-medium">Facebook</span>
-            </button>
+              <span className="text-sm font-medium">TikTok</span>
+            </a>
           </div>
 
           {/* Sign Up Link */}
