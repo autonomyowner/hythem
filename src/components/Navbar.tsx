@@ -58,6 +58,7 @@ export const Navbar = (): JSX.Element => {
             {[0, 1, 2].map((index) => (
               <span key={index} className="font-modern tracking-wide">
                 {t.navbar.announcement}
+                {'\u00A0'}
               </span>
             ))}
           </div>

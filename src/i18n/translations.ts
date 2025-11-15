@@ -171,7 +171,7 @@ export const uiTranslations: Record<SupportedLanguage, UITranslation> = {
       announcement: 'Livraison 58 wilayas · Paiement à la livraison',
       links: {
         home: 'Boutique',
-        services: 'Services',
+        services: 'Boutique',
       },
       social: {
         instagram: 'Instagram',
@@ -368,8 +368,8 @@ export const uiTranslations: Record<SupportedLanguage, UITranslation> = {
     navbar: {
       announcement: 'توصيل إلى 58 ولاية · الدفع عند الاستلام',
       links: {
-        home: 'المتجر',
-        services: 'الخدمات',
+        home: 'المتجر نساء',
+        services: 'المتجر رجال',
       },
       social: {
         instagram: 'إنستغرام',
