@@ -4,6 +4,7 @@ import * as React from 'react'
 import type { ProductNeed, FilterState } from '@/data/products'
 import { cn } from '@/lib/utils'
 import { BudgetSlider } from './BudgetSlider'
+import { useTranslations } from '@/hooks/useTranslations'
 
 type ShopFiltersProps = {
   filters: FilterState
@@ -16,68 +17,17 @@ type ShopFiltersProps = {
 
 const needs: ProductNeed[] = ['Hiver', 'Quotidien', 'Sport', 'Élégant']
 
-// Generic use case labels for display
-const needLabels: Record<ProductNeed, string> = {
-  'Hiver': 'Pour l\'hiver',
-  'Quotidien': 'Usage quotidien',
-  'Sport': 'Sport & Activités',
-  'Élégant': 'Style élégant',
-}
-
-// Marketplace categories
-const marketplaceCategories = [
-  {
-    id: 'electronics',
-    label: 'Électronique & Technologie',
-    subcategories: [
-      'Téléphones & Accessoires',
-      'Informatique',
-      'Électroménager & Électronique',
-    ],
-  },
-  {
-    id: 'transportation',
-    label: 'Transport & Pièces',
-    subcategories: [
-      'Automobiles & Véhicules',
-      'Pièces détachées',
-    ],
-  },
-  {
-    id: 'home',
-    label: 'Maison, Jardin & Meubles',
-    subcategories: [
-      'Meubles & Maison',
-      'Matériaux & Équipement',
-    ],
-  },
-  {
-    id: 'personal',
-    label: 'Bien-être & Mode',
-    subcategories: [
-      'Vêtements & Mode',
-      'Santé & Beauté',
-    ],
-  },
-  {
-    id: 'lifestyle',
-    label: 'Loisirs & Divertissements',
-    subcategories: [
-      'Loisirs & Divertissements',
-      'Sport',
-    ],
-  },
-]
-
 export const ShopFilters = ({
   filters,
   onFiltersChange,
   productCounts,
 }: ShopFiltersProps): JSX.Element => {
+  const t = useTranslations()
   const [isMobileOpen, setIsMobileOpen] = React.useState(false)
   const [selectedCategory, setSelectedCategory] = React.useState<string>('')
   const [isCategoryOpen, setIsCategoryOpen] = React.useState(false)
   const categoryRef = React.useRef<HTMLDivElement>(null)
+  const perfumeCategories = React.useMemo(() => t.shopFilters.categoryGroups, [t])
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
@@ -155,12 +105,12 @@ export const ShopFilters = ({
   )
 
   const getSelectedCategoryLabel = (): string => {
-    if (!selectedCategory) return 'Sélectionner une catégorie'
+    if (!selectedCategory) return t.shopFilters.selectCategory
     
     // Check if it's a subcategory (format: categoryId-index)
     if (selectedCategory.includes('-')) {
       const [categoryId, indexStr] = selectedCategory.split('-')
-      const category = marketplaceCategories.find((c) => c.id === categoryId)
+      const category = perfumeCategories.find((c) => c.id === categoryId)
       if (category && indexStr) {
         const index = parseInt(indexStr, 10)
         if (!isNaN(index) && category.subcategories[index]) {
@@ -170,8 +120,8 @@ export const ShopFilters = ({
     }
     
     // Otherwise it's a main category
-    const category = marketplaceCategories.find((c) => c.id === selectedCategory)
-    return category?.label || 'Sélectionner une catégorie'
+    const category = perfumeCategories.find((c) => c.id === selectedCategory)
+    return category?.label || t.shopFilters.selectCategory
   }
 
   const FilterContent = () => (
@@ -179,7 +129,7 @@ export const ShopFilters = ({
       {/* Disponibilité */}
       <div>
         <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-3">
-          Disponibilité
+          {t.shopFilters.availability.label}
         </h3>
         <div className="space-y-2">
           <label className="flex items-center gap-2 cursor-pointer">
@@ -190,7 +140,7 @@ export const ShopFilters = ({
               onChange={() => updateFilter('availability', 'all')}
               className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500"
             />
-            <span className="text-sm text-kitchen-lux-dark-green-700">Tous</span>
+              <span className="text-sm text-kitchen-lux-dark-green-700">{t.shopFilters.availability.all}</span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -200,8 +150,8 @@ export const ShopFilters = ({
               onChange={() => updateFilter('availability', 'in-stock')}
               className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500"
             />
-            <span className="text-sm text-kitchen-lux-dark-green-700">
-              En stock ({productCounts.inStock})
+              <span className="text-sm text-kitchen-lux-dark-green-700">
+              {t.shopFilters.availability.inStock(productCounts.inStock)}
             </span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
@@ -212,8 +162,8 @@ export const ShopFilters = ({
               onChange={() => updateFilter('availability', 'out-of-stock')}
               className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500"
             />
-            <span className="text-sm text-kitchen-lux-dark-green-700">
-              Épuisé ({productCounts.outOfStock})
+              <span className="text-sm text-kitchen-lux-dark-green-700">
+              {t.shopFilters.availability.outOfStock(productCounts.outOfStock)}
             </span>
           </label>
         </div>
@@ -221,7 +171,7 @@ export const ShopFilters = ({
         {/* Prix Range Slider */}
         <div className="mt-6 pt-6 border-t border-kitchen-lux-dark-green-200">
           <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-6">
-            Prix
+            {t.shopFilters.price}
           </h3>
           <BudgetSlider
             min={0}
@@ -236,17 +186,17 @@ export const ShopFilters = ({
       {/* Marque */}
       <div>
         <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-3">
-          Marque
+          {t.shopFilters.brand}
         </h3>
         <div className="space-y-2">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
-              checked={filters.brands.includes('WinterDZ')}
-              onChange={() => toggleBrand('WinterDZ')}
+              checked={filters.brands.includes('Allouani')}
+              onChange={() => toggleBrand('Allouani')}
               className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500 rounded"
             />
-            <span className="text-sm text-kitchen-lux-dark-green-700">WinterDZ</span>
+              <span className="text-sm text-kitchen-lux-dark-green-700">Allouani</span>
           </label>
         </div>
       </div>
@@ -254,21 +204,21 @@ export const ShopFilters = ({
       {/* Catégorie - Dropdown */}
       <div>
         <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-3">
-          Catégorie
+          {t.shopFilters.category}
         </h3>
         <div className="space-y-3">
           {/* Mobile Select */}
           <div className="lg:hidden">
             <label className="block text-xs font-medium text-kitchen-lux-dark-green-600 mb-2">
-              Choisir une catégorie
+              {t.shopFilters.selectCategory}
             </label>
             <select
               value={selectedCategory}
               onChange={handleMobileCategoryChange}
               className="w-full rounded-lg border border-kitchen-lux-dark-green-200 bg-white px-3 py-2 text-sm text-kitchen-lux-dark-green-700 focus:border-kitchen-lux-dark-green-400 focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500"
             >
-              <option value="">Toutes les catégories</option>
-              {marketplaceCategories.map((category) => (
+              <option value="">{t.shopFilters.allCategories}</option>
+              {perfumeCategories.map((category) => (
                 <React.Fragment key={category.id}>
                   <option value={category.id}>{category.label}</option>
                   {category.subcategories.map((subcategory, idx) => (
@@ -307,7 +257,7 @@ export const ShopFilters = ({
               <div className="absolute z-50 w-full mt-1 bg-white border border-kitchen-lux-dark-green-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
                 <div className="px-4 py-2 border-b border-kitchen-lux-dark-green-100 flex items-center justify-between gap-2">
                   <span className="text-xs font-medium uppercase tracking-[0.2em] text-kitchen-lux-dark-green-500">
-                    Catégories Marketplace
+                    {t.shopFilters.category}
                   </span>
                   {selectedCategory && (
                     <button
@@ -315,11 +265,11 @@ export const ShopFilters = ({
                       onClick={() => handleCategorySelect('')}
                       className="text-xs font-medium text-kitchen-lux-dark-green-600 hover:text-kitchen-lux-dark-green-800"
                     >
-                      Effacer
+                      {t.shopFilters.clear}
                     </button>
                   )}
                 </div>
-                {marketplaceCategories.map((category) => (
+                {perfumeCategories.map((category) => (
                   <div
                     key={category.id}
                     className="border-b border-kitchen-lux-dark-green-100 last:border-b-0"
@@ -362,7 +312,7 @@ export const ShopFilters = ({
       {/* Usage */}
       <div>
         <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-kitchen-lux-dark-green-800 mb-3">
-          Usage
+          {t.shopFilters.usage}
         </h3>
         <div className="space-y-2">
           {needs.map((need) => (
@@ -373,7 +323,7 @@ export const ShopFilters = ({
                 onChange={() => toggleNeed(need)}
                 className="w-4 h-4 text-kitchen-lux-dark-green-600 focus:ring-kitchen-lux-dark-green-500 rounded"
               />
-              <span className="text-sm text-kitchen-lux-dark-green-700">{needLabels[need]}</span>
+              <span className="text-sm text-kitchen-lux-dark-green-700">{t.shopFilters.needs[need]}</span>
             </label>
           ))}
         </div>
@@ -389,7 +339,7 @@ export const ShopFilters = ({
         className="lg:hidden flex items-center justify-between w-full px-4 py-3 border border-kitchen-lux-dark-green-200 rounded-lg bg-white text-kitchen-lux-dark-green-800 font-medium mb-4"
         type="button"
       >
-        <span className="text-sm uppercase tracking-[0.2em]">Filtres</span>
+        <span className="text-sm uppercase tracking-[0.2em]">{t.shopFilters.mobileToggle}</span>
         <svg
           className={`w-5 h-5 transition-transform ${isMobileOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -416,7 +366,7 @@ export const ShopFilters = ({
       <aside className="hidden lg:block w-64 flex-shrink-0">
         <div className="sticky top-24">
           <h2 className="text-lg font-elegant font-semibold text-kitchen-lux-dark-green-800 mb-6">
-            Filtres
+            {t.shopFilters.title}
           </h2>
           <div className="p-6 border border-kitchen-lux-dark-green-200 rounded-lg bg-white">
             <FilterContent />

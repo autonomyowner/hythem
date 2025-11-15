@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useTranslations } from '@/hooks/useTranslations'
 
 export const HeroSection = (): JSX.Element => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
@@ -19,6 +20,8 @@ export const HeroSection = (): JSX.Element => {
     buttons: false,
     footer: false
   })
+
+  const t = useTranslations()
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setIsVisible(true), 100)
@@ -44,11 +47,9 @@ export const HeroSection = (): JSX.Element => {
   }, [isVisible])
 
   const handleContactClick = (): void => {
-    const phoneNumber = '+213673734578'
-    const message =
-      'Bonjour! Je suis interesse(e) par vos vêtements WinterDZ.'
+    const phoneNumber = '+213671389113'
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message,
+      t.hero.whatsappMessage,
     )}`
     window.open(whatsappUrl, '_blank')
   }
@@ -107,7 +108,7 @@ export const HeroSection = (): JSX.Element => {
                 : 'translate-y-8 opacity-0'
             }`}
           >
-            Des vêtements de qualité pour Algériens, conçus avec passion pour votre style et votre confort.
+            {t.hero.subtitle}
           </p>
 
           <h1 
@@ -117,7 +118,7 @@ export const HeroSection = (): JSX.Element => {
                 : 'translate-y-12 opacity-0'
             }`}
           >
-            WinterDZ : Vêtements pour Algériens, Style et Élégance à Votre Image.
+            {t.hero.title}
           </h1>
 
           <p 
@@ -128,7 +129,7 @@ export const HeroSection = (): JSX.Element => {
             }`}
             style={{ transitionDelay: '200ms' }}
           >
-            Découvrez notre collection de vêtements spécialement conçus pour les Algériens.
+            {t.hero.description}
           </p>
 
 
@@ -144,14 +145,14 @@ export const HeroSection = (): JSX.Element => {
               className="inline-flex items-center justify-center rounded-full border border-kitchen-lux-dark-green-300 bg-gradient-to-r from-kitchen-lux-dark-green-50 to-kitchen-lux-dark-green-100 px-8 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-kitchen-lux-dark-green-800 transition-all duration-200 hover:border-kitchen-lux-dark-green-500 hover:bg-gradient-to-r hover:from-kitchen-lux-dark-green-100 hover:to-kitchen-lux-dark-green-200 hover:text-kitchen-lux-dark-green-900 hover:shadow-md hover:shadow-kitchen-lux-dark-green-200/30"
               type="button"
             >
-              DÉCOUVRIR NOS COMPLÉMENTS
+              {t.hero.primaryCta}
             </button>
 
             <Link
               href="/services"
               className="inline-flex items-center justify-center rounded-full border border-white/50 px-8 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-white transition-all duration-200 hover:border-white hover:bg-white/10"
             >
-              En savoir plus
+              {t.hero.secondaryCta}
             </Link>
           </div>
 
@@ -163,12 +164,14 @@ export const HeroSection = (): JSX.Element => {
             }`}
           >
             <div className="text-sm uppercase tracking-[0.3em] text-white/70">
-              Formulé en France
+              {t.hero.originLabel}
             </div>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/80">
-              <span className="whitespace-nowrap">Ingrédients actifs purs</span>
-              <span className="whitespace-nowrap">Sans OGM ni gluten</span>
-              <span className="whitespace-nowrap">Facile à assimiler</span>
+              {t.hero.highlights.map((highlight) => (
+                <span key={highlight} className="whitespace-nowrap">
+                  {highlight}
+                </span>
+              ))}
             </div>
           </div>
         </div>

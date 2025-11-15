@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Product } from '@/data/products'
+import { useLanguage } from '@/context/LanguageContext'
+import { useTranslations } from '@/hooks/useTranslations'
 
 type ProductGridProps = {
   products: Product[]
@@ -13,6 +15,12 @@ export const ProductGrid = ({
   products,
   displayMode,
 }: ProductGridProps): JSX.Element => {
+  const { language } = useLanguage()
+  const t = useTranslations()
+
+  const getProductTypeLabel = (type: Product['productType']) =>
+    t.product.productTypes[type] ?? type
+
   if (displayMode === 'list') {
     return (
       <div className="space-y-4">
@@ -25,12 +33,12 @@ export const ProductGrid = ({
             <div className="relative h-48 w-48 flex-shrink-0 overflow-hidden rounded-lg bg-white">
               {product.isPromo && (
                 <div className="absolute left-2 top-2 z-10 rounded bg-kitchen-lux-dark-green-600 px-2 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">
-                  PROMO
+                  {t.product.promoBadge}
                 </div>
               )}
               <Image
                 src={product.image}
-                alt={product.name}
+                alt={product.name[language]}
                 fill
                 className="object-contain p-4"
               />
@@ -38,10 +46,11 @@ export const ProductGrid = ({
             <div className="flex flex-1 flex-col justify-between">
               <div>
                 <h3 className="text-xl font-elegant font-semibold text-kitchen-lux-dark-green-800">
-                  {product.name}
+                  {product.name[language]}
                 </h3>
                 <p className="mt-2 text-sm text-kitchen-lux-dark-green-600">
-                  {product.productType} • {product.brand}
+                  {getProductTypeLabel(product.productType)} {t.product.productTypeSeparator}{' '}
+                  {product.brand}
                 </p>
               </div>
               <div className="mt-4 flex items-center gap-3">
@@ -78,7 +87,7 @@ export const ProductGrid = ({
           {/* Promo Badge */}
           {product.isPromo && (
             <div className="absolute left-3 top-3 z-10 rounded bg-kitchen-lux-dark-green-600 px-2 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">
-              PROMO
+              {t.product.promoBadge}
             </div>
           )}
 
@@ -86,7 +95,7 @@ export const ProductGrid = ({
           <div className="relative aspect-square bg-white flex items-center justify-center p-4">
             <Image
               src={product.image}
-              alt={product.name}
+              alt={product.name[language]}
               fill
               className="object-contain"
             />
@@ -95,10 +104,10 @@ export const ProductGrid = ({
           {/* Product Info */}
           <div className="p-5">
             <h3 className="text-lg font-elegant font-semibold text-kitchen-lux-dark-green-800 line-clamp-2">
-              {product.name}
+              {product.name[language]}
             </h3>
             <p className="mt-2 text-xs text-kitchen-lux-dark-green-600">
-              {product.productType}
+              {getProductTypeLabel(product.productType)}
             </p>
 
             {/* Price */}

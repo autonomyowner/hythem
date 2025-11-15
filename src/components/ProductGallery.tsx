@@ -2,10 +2,13 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import type { Product } from '@/data/products'
+import { useLanguage } from '@/context/LanguageContext'
+import { useTranslations } from '@/hooks/useTranslations'
 
 type ProductGalleryProps = {
   images: string[]
-  productName: string
+  productName: Product['name']
 }
 
 export const ProductGallery = ({
@@ -14,6 +17,9 @@ export const ProductGallery = ({
 }: ProductGalleryProps): JSX.Element => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
+  const { language } = useLanguage()
+  const t = useTranslations()
+  const localizedName = productName[language]
 
   const handleThumbnailClick = (index: number): void => {
     setSelectedImageIndex(index)
@@ -48,11 +54,11 @@ export const ProductGallery = ({
                 : 'border-kitchen-lux-dark-green-200 hover:border-kitchen-lux-dark-green-400'
             }`}
             type="button"
-            aria-label={`Voir l'image ${index + 1}`}
+            aria-label={t.gallery.viewImage(index + 1)}
           >
             <Image
               src={image}
-              alt={`${productName} - Vue ${index + 1}`}
+              alt={`${localizedName} - ${index + 1}`}
               fill
               className="object-contain p-2"
             />
@@ -70,7 +76,7 @@ export const ProductGallery = ({
         >
           <Image
             src={images[selectedImageIndex]}
-            alt={productName}
+            alt={localizedName}
             fill
             className={`object-contain p-8 transition-transform duration-300 ${
               isZoomed ? 'scale-150' : 'scale-100'
@@ -104,7 +110,7 @@ export const ProductGallery = ({
               onClick={handlePrevious}
               className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border border-kitchen-lux-dark-green-300 rounded-full p-2 shadow-md transition-all duration-200 hover:shadow-lg"
               type="button"
-              aria-label="Image précédente"
+              aria-label={t.gallery.previous}
             >
               <svg
                 className="w-6 h-6 text-kitchen-lux-dark-green-800"
@@ -124,7 +130,7 @@ export const ProductGallery = ({
               onClick={handleNext}
               className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border border-kitchen-lux-dark-green-300 rounded-full p-2 shadow-md transition-all duration-200 hover:shadow-lg"
               type="button"
-              aria-label="Image suivante"
+              aria-label={t.gallery.next}
             >
               <svg
                 className="w-6 h-6 text-kitchen-lux-dark-green-800"

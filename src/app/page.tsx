@@ -1,18 +1,18 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import Image from 'next/image'
 import { ProductGrid } from '@/components/ProductGrid'
 import { ShopFilters } from '@/components/ShopFilters'
 import { ProductControls } from '@/components/ProductControls'
 import { womenPerfumes, type FilterState, type SortOption } from '@/data/products'
+import { useTranslations } from '@/hooks/useTranslations'
 
 export default function HomePage(): JSX.Element {
   const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid')
   const [sortOption, setSortOption] = useState<SortOption>('best-sellers')
   const [filters, setFilters] = useState<FilterState>({
     availability: 'all',
-    brands: ['WinterDZ'],
+    brands: ['Allouani'],
     priceRange: { min: 0, max: 100000 },
     productTypes: [],
     needs: [],
@@ -91,26 +91,16 @@ export default function HomePage(): JSX.Element {
     return { inStock, outOfStock }
   }, [])
 
+  const t = useTranslations()
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-kitchen-lux-dark-green-50 to-kitchen-lux-dark-green-100 px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="mt-4 text-4xl font-elegant font-semibold text-kitchen-lux-dark-green-800 sm:text-5xl">
-            Marketplace - Collection WinterDZ
+            {t.catalog.women}
           </h1>
-          {/* Logo */}
-          <div className="flex justify-center mt-8">
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48">
-              <Image
-                src="/WINTERDZ.png"
-                alt="WinterDZ Logo"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-          </div>
         </div>
 
         {/* Main Content */}
@@ -139,7 +129,7 @@ export default function HomePage(): JSX.Element {
             ) : (
               <div className="text-center py-12">
                 <p className="text-kitchen-lux-dark-green-700">
-                  Aucun produit ne correspond à vos critères de recherche.
+                  {t.product.emptyState}
                 </p>
               </div>
             )}

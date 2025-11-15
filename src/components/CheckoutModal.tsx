@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import type { Product } from '@/data/products'
+import { useLanguage } from '@/context/LanguageContext'
+import { useTranslations } from '@/hooks/useTranslations'
 
 type CheckoutModalProps = {
   product: Product
@@ -38,6 +40,11 @@ export const CheckoutModal = ({
     address: '',
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const { language } = useLanguage()
+  const t = useTranslations()
+  const localizedName = product.name[language]
+  const localizedCategory = product.category[language]
+  const localizedNeed = product.need ? t.product.needs[product.need] ?? product.need : null
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -72,25 +79,25 @@ export const CheckoutModal = ({
     const newErrors: Record<string, string> = {}
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Le nom est requis'
+      newErrors.name = t.checkout.form.errors.name
     }
 
     if (!formData.phone.trim()) {
-      newErrors.phone = 'Le numéro de téléphone est requis'
+      newErrors.phone = t.checkout.form.errors.phone
     } else if (!/^(\+213|0)[567][0-9]{8}$/.test(formData.phone.replace(/\s/g, ''))) {
-      newErrors.phone = 'Numéro de téléphone invalide'
+      newErrors.phone = t.checkout.form.errors.phoneInvalid
     }
 
     if (!formData.willaya) {
-      newErrors.willaya = 'La wilaya est requise'
+      newErrors.willaya = t.checkout.form.errors.city
     }
 
     if (!formData.baladia.trim()) {
-      newErrors.baladia = 'La baladia est requise'
+      newErrors.baladia = t.checkout.form.errors.commune
     }
 
     if (!formData.address.trim()) {
-      newErrors.address = 'L\'adresse est requise'
+      newErrors.address = t.checkout.form.errors.address
     }
 
     setErrors(newErrors)
@@ -104,36 +111,54 @@ export const CheckoutModal = ({
       return
     }
 
-    const phoneNumber = '+213673734578'
+    const phoneNumber = '+213671389113'
     const totalPrice = product.price * quantity
-    const deliveryTypeText = formData.deliveryType === 'house' ? 'À domicile' : 'Au bureau'
-    
-    const message = `Bonjour! Je souhaite acheter maintenant:
+    const deliveryTypeText =
+      formData.deliveryType === 'house'
+        ? t.checkout.form.deliveryOptions.house.title
+        : t.checkout.form.deliveryOptions.office.title
 
-📦 PRODUIT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Nom: ${product.name}
-Prix unitaire: ${product.price.toLocaleString()} DA
-Quantité: ${quantity}
-Prix total: ${totalPrice.toLocaleString()} DA
-Type: ${product.productType}
-${product.category ? `Catégorie: ${product.category}` : ''}
-${product.need ? `Usage: ${product.need}` : ''}
-${product.originalPrice && product.originalPrice > product.price ? `🎯 Promotion: ${product.originalPrice.toLocaleString()} DA → ${product.price.toLocaleString()} DA` : ''}
+    const summaryLines = [
+      `${t.checkout.recap.product}: ${localizedName}`,
+      `${t.checkout.recap.quantity}: ${quantity}`,
+      `${t.checkout.recap.total}: ${totalPrice.toLocaleString()} DA`,
+      `${t.checkout.recap.category}: ${localizedCategory}`,
+      localizedNeed ? `${t.shopFilters.usage}: ${localizedNeed}` : null,
+    ]
+      .filter(Boolean)
+      .join('\n')
 
-👤 INFORMATIONS CLIENT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Nom: ${formData.name}
-Téléphone: ${formData.phone}
-Wilaya: ${formData.willaya}
-Baladia: ${formData.baladia}
+    const clientLines = [
+      `${t.checkout.form.name}: ${formData.name}`,
+      `${t.checkout.form.phone}: ${formData.phone}`,
+      `${t.checkout.form.city}: ${formData.willaya}`,
+      `${t.checkout.form.commune}: ${formData.baladia}`,
+    ].join('\n')
 
-🚚 LIVRAISON
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Type: ${deliveryTypeText}
-Adresse: ${formData.address}
+    const deliveryLines = [
+      `${t.checkout.form.delivery}: ${deliveryTypeText}`,
+      `${t.checkout.form.address}: ${formData.address}`,
+    ].join('\n')
 
-Merci!`
+    const greeting =
+      language === 'fr' ? 'Bonjour ! Je souhaite acheter maintenant :' : 'مرحباً! أود الشراء الآن:'
+    const closing = language === 'fr' ? 'Merci !' : 'شكراً لكم!'
+
+    const message = `${greeting}
+
+${t.checkout.recap.title}
+------------------------------
+${summaryLines}
+
+${t.checkout.title}
+------------------------------
+${clientLines}
+
+${t.checkout.form.delivery}
+------------------------------
+${deliveryLines}
+
+${closing}`
 
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
@@ -165,13 +190,13 @@ Merci!`
         <div className="sticky top-0 bg-gradient-to-r from-kitchen-lux-dark-green-600 to-kitchen-lux-dark-green-700 text-white p-6 rounded-t-lg">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-elegant font-semibold">
-              Informations de Commande
+              {t.checkout.title}
             </h2>
             <button
               onClick={onClose}
               className="text-white hover:text-gray-200 transition-colors"
               type="button"
-              aria-label="Fermer"
+              aria-label={t.checkout.closeLabel}
             >
               <svg
                 className="w-6 h-6"
@@ -195,17 +220,17 @@ Merci!`
           {/* Product Summary */}
           <div className="bg-kitchen-lux-dark-green-50 p-4 rounded-lg border border-kitchen-lux-dark-green-200">
             <h3 className="font-semibold text-kitchen-lux-dark-green-800 mb-2">
-              Résumé de la commande
+              {t.checkout.summary}
             </h3>
             <div className="space-y-1 text-sm text-kitchen-lux-dark-green-700">
               <p>
-                <span className="font-medium">Produit:</span> {product.name}
+                <span className="font-medium">{t.checkout.recap.product}:</span> {localizedName}
               </p>
               <p>
-                <span className="font-medium">Quantité:</span> {quantity}
+                <span className="font-medium">{t.checkout.recap.quantity}:</span> {quantity}
               </p>
               <p>
-                <span className="font-medium">Prix total:</span>{' '}
+                <span className="font-medium">{t.checkout.recap.total}:</span>{' '}
                 <span className="text-lg font-bold text-kitchen-lux-dark-green-800">
                   {(product.price * quantity).toLocaleString()} DA
                 </span>
@@ -219,7 +244,7 @@ Merci!`
               htmlFor="name"
               className="block text-sm font-semibold text-kitchen-lux-dark-green-800 mb-2"
             >
-              Nom complet <span className="text-red-500">*</span>
+              {t.checkout.form.name} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -230,7 +255,7 @@ Merci!`
               className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500 ${
                 errors.name ? 'border-red-500' : 'border-kitchen-lux-dark-green-300'
               }`}
-              placeholder="Votre nom complet"
+              placeholder={t.checkout.form.namePlaceholder}
             />
             {errors.name && (
               <p className="mt-1 text-sm text-red-500">{errors.name}</p>
@@ -243,7 +268,7 @@ Merci!`
               htmlFor="phone"
               className="block text-sm font-semibold text-kitchen-lux-dark-green-800 mb-2"
             >
-              Numéro de téléphone <span className="text-red-500">*</span>
+              {t.checkout.form.phone} <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
@@ -254,7 +279,7 @@ Merci!`
               className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500 ${
                 errors.phone ? 'border-red-500' : 'border-kitchen-lux-dark-green-300'
               }`}
-              placeholder="+213 673 73 45 78 ou 0673 73 45 78"
+              placeholder={t.checkout.form.phonePlaceholder}
             />
             {errors.phone && (
               <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
@@ -267,7 +292,7 @@ Merci!`
               htmlFor="willaya"
               className="block text-sm font-semibold text-kitchen-lux-dark-green-800 mb-2"
             >
-              Wilaya <span className="text-red-500">*</span>
+              {t.checkout.form.city} <span className="text-red-500">*</span>
             </label>
             <select
               id="willaya"
@@ -278,7 +303,7 @@ Merci!`
                 errors.willaya ? 'border-red-500' : 'border-kitchen-lux-dark-green-300'
               }`}
             >
-              <option value="">Sélectionnez une wilaya</option>
+              <option value="">{t.checkout.form.cityPlaceholder}</option>
               {ALGERIAN_WILAYAS.map((wilaya) => (
                 <option key={wilaya} value={wilaya}>
                   {wilaya}
@@ -296,7 +321,7 @@ Merci!`
               htmlFor="baladia"
               className="block text-sm font-semibold text-kitchen-lux-dark-green-800 mb-2"
             >
-              Baladia (Commune) <span className="text-red-500">*</span>
+              {t.checkout.form.commune} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -307,7 +332,7 @@ Merci!`
               className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500 ${
                 errors.baladia ? 'border-red-500' : 'border-kitchen-lux-dark-green-300'
               }`}
-              placeholder="Nom de votre commune"
+              placeholder={t.checkout.form.communePlaceholder}
             />
             {errors.baladia && (
               <p className="mt-1 text-sm text-red-500">{errors.baladia}</p>
@@ -317,7 +342,7 @@ Merci!`
           {/* Delivery Type */}
           <div>
             <label className="block text-sm font-semibold text-kitchen-lux-dark-green-800 mb-3">
-              Type de livraison <span className="text-red-500">*</span>
+              {t.checkout.form.delivery} <span className="text-red-500">*</span>
             </label>
             <div className="grid grid-cols-2 gap-4">
               <label
@@ -337,10 +362,10 @@ Merci!`
                 />
                 <div>
                   <div className="font-semibold text-kitchen-lux-dark-green-800">
-                    À domicile
+                    {t.checkout.form.deliveryOptions.house.title}
                   </div>
                   <div className="text-sm text-kitchen-lux-dark-green-600">
-                    Livraison à votre adresse
+                    {t.checkout.form.deliveryOptions.house.description}
                   </div>
                 </div>
               </label>
@@ -361,10 +386,10 @@ Merci!`
                 />
                 <div>
                   <div className="font-semibold text-kitchen-lux-dark-green-800">
-                    Au bureau
+                    {t.checkout.form.deliveryOptions.office.title}
                   </div>
                   <div className="text-sm text-kitchen-lux-dark-green-600">
-                    Livraison au lieu de travail
+                    {t.checkout.form.deliveryOptions.office.description}
                   </div>
                 </div>
               </label>
@@ -377,7 +402,7 @@ Merci!`
               htmlFor="address"
               className="block text-sm font-semibold text-kitchen-lux-dark-green-800 mb-2"
             >
-              Adresse complète <span className="text-red-500">*</span>
+              {t.checkout.form.address} <span className="text-red-500">*</span>
             </label>
             <textarea
               id="address"
@@ -388,7 +413,7 @@ Merci!`
               className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-500 ${
                 errors.address ? 'border-red-500' : 'border-kitchen-lux-dark-green-300'
               }`}
-              placeholder="Rue, numéro, quartier, etc."
+              placeholder={t.checkout.form.addressPlaceholder}
             />
             {errors.address && (
               <p className="mt-1 text-sm text-red-500">{errors.address}</p>
@@ -402,13 +427,13 @@ Merci!`
               onClick={onClose}
               className="flex-1 px-6 py-3 border-2 border-kitchen-lux-dark-green-300 text-kitchen-lux-dark-green-800 rounded-lg font-semibold hover:bg-kitchen-lux-dark-green-50 transition-colors"
             >
-              Annuler
+              {t.checkout.form.cancel}
             </button>
             <button
               type="submit"
               className="flex-1 px-6 py-3 bg-kitchen-lux-dark-green-600 text-white rounded-lg font-semibold hover:bg-kitchen-lux-dark-green-700 transition-colors"
             >
-              Envoyer sur WhatsApp
+              {t.checkout.form.submit}
             </button>
           </div>
         </form>

@@ -10,10 +10,10 @@ export const AboutHero = (): JSX.Element => {
                 A propos
               </p>
               <h1 className="mt-5 text-4xl font-elegant font-semibold text-neutral-900 sm:text-5xl">
-                WinterDZ maitrise l art des fragrances authentiques
+                Allouani maitrise l art des fragrances authentiques
               </h1>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                Basee a Bouzareah, WinterDZ selectionne et propose des parfums de luxe
+                Basee a Bouzareah, Allouani selectionne et propose des parfums de luxe
                 avec un savoir-faire authentique et des fragrances de qualite. Nous vous guidons
                 vers la fragrance parfaite grace a notre expertise en parfumerie et notre attention aux details.
               </p>

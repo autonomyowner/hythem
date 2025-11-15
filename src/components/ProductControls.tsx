@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import type { SortOption } from '@/data/products'
+import { useTranslations } from '@/hooks/useTranslations'
 
 type DisplayMode = 'grid' | 'list'
-type SortOption = 'best-sellers' | 'price-asc' | 'price-desc' | 'newest' | 'highest-rated'
 
 type ProductControlsProps = {
   productCount: number
@@ -13,14 +13,6 @@ type ProductControlsProps = {
   onSortChange: (option: SortOption) => void
 }
 
-const sortOptions: { value: SortOption; label: string }[] = [
-  { value: 'best-sellers', label: 'Meilleures ventes' },
-  { value: 'price-asc', label: 'Prix croissant' },
-  { value: 'price-desc', label: 'Prix décroissant' },
-  { value: 'newest', label: 'Nouveautés' },
-  { value: 'highest-rated', label: 'Mieux notés' },
-]
-
 export const ProductControls = ({
   productCount,
   displayMode,
@@ -28,10 +20,13 @@ export const ProductControls = ({
   sortOption,
   onSortChange,
 }: ProductControlsProps): JSX.Element => {
+  const t = useTranslations()
+  const sortEntries = Object.entries(t.productControls.sorts) as Array<[SortOption, string]>
+
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-kitchen-lux-dark-green-200 pb-4">
       <div className="text-sm font-medium text-kitchen-lux-dark-green-700">
-        {productCount} {productCount === 1 ? 'Produit' : 'Produits'}
+        {t.productControls.count(productCount)}
       </div>
 
       <div className="flex items-center gap-4">
@@ -44,7 +39,7 @@ export const ProductControls = ({
                 ? 'bg-kitchen-lux-dark-green-100 text-kitchen-lux-dark-green-800'
                 : 'text-kitchen-lux-dark-green-600 hover:text-kitchen-lux-dark-green-800'
             }`}
-            aria-label="Vue en grille"
+            aria-label={t.productControls.gridAria}
             type="button"
           >
             <svg
@@ -69,7 +64,7 @@ export const ProductControls = ({
                 ? 'bg-kitchen-lux-dark-green-100 text-kitchen-lux-dark-green-800'
                 : 'text-kitchen-lux-dark-green-600 hover:text-kitchen-lux-dark-green-800'
             }`}
-            aria-label="Vue en liste"
+            aria-label={t.productControls.listAria}
             type="button"
           >
             <svg
@@ -91,14 +86,18 @@ export const ProductControls = ({
 
         {/* Sort Dropdown */}
         <div className="relative">
+          <label className="sr-only" htmlFor="sort-select">
+            {t.productControls.sortLabel}
+          </label>
           <select
+            id="sort-select"
             value={sortOption}
             onChange={(e) => onSortChange(e.target.value as SortOption)}
             className="appearance-none rounded-lg border border-kitchen-lux-dark-green-200 bg-white px-4 py-2 pr-8 text-sm font-medium text-kitchen-lux-dark-green-800 focus:border-kitchen-lux-dark-green-400 focus:outline-none focus:ring-2 focus:ring-kitchen-lux-dark-green-200"
           >
-            {sortOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {sortEntries.map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
               </option>
             ))}
           </select>

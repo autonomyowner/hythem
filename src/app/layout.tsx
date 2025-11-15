@@ -3,6 +3,8 @@ import { Inter, Playfair_Display, Great_Vibes } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
+import { LanguageProvider } from '@/context/LanguageContext'
+import { SiteFooter } from '@/components/SiteFooter'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,14 +26,14 @@ const greatVibes = Great_Vibes({
 })
 
 export const metadata: Metadata = {
-  title: 'WinterDZ - Vêtements pour Algériens',
+  title: 'Allouani - Parfums pour Algériens',
   description:
     'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
   keywords:
     'parfum, parfums de luxe, fragrances authentiques, eau de parfum, parfum original, Bouzareah, parfumerie, fragrances rares, parfums importes',
-  authors: [{ name: 'WinterDZ' }],
-  creator: 'WinterDZ',
-  publisher: 'WinterDZ',
+  authors: [{ name: 'Allouani' }],
+  creator: 'Allouani',
+  publisher: 'Allouani',
   icons: {
     icon: '/WINTERDZ.png',
     shortcut: '/WINTERDZ.png',
@@ -47,17 +49,17 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'WinterDZ - Vêtements pour Algériens',
+    title: 'Allouani - Parfums pour Algériens',
     description:
       'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
     url: 'https://brahim-perfum.com',
-    siteName: 'WinterDZ',
+    siteName: 'Allouani',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'WinterDZ - Vêtements pour Algériens',
+        alt: 'Allouani - Parfums pour Algériens',
       },
     ],
     locale: 'fr_DZ',
@@ -65,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WinterDZ - Vêtements pour Algériens',
+    title: 'Allouani - Parfums pour Algériens',
     description:
       'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
     images: ['/og-image.jpg'],
@@ -96,29 +98,12 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-gradient-elegant min-h-screen text-slate-900`}
       >
-        <Navbar />
-        <main className="pt-28 md:pt-32 pb-20">{children}</main>
-        <footer 
-          className="backdrop-blur-md border-t border-green-600/20 text-white py-4"
-          style={{
-            background: 'linear-gradient(to right, #2E8B57 0%, #9AFE2E 50%, #2E8B57 100%)'
-          }}
-        >
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-sm">
-              Made by{' '}
-              <a
-                href="https://www.sitedz.store"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-white/80 transition-colors underline"
-              >
-                www.sitedz.store
-              </a>
-            </p>
-          </div>
-        </footer>
-        <WhatsAppButton />
+        <LanguageProvider>
+          <Navbar />
+          <main className="pt-28 md:pt-32 pb-20">{children}</main>
+          <SiteFooter />
+          <WhatsAppButton />
+        </LanguageProvider>
       </body>
     </html>
   )

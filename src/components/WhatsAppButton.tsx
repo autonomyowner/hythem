@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from '@/hooks/useTranslations'
 
 export const WhatsAppButton = (): JSX.Element => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
+  const t = useTranslations()
 
   useEffect(() => {
     const handleScroll = (): void => {
@@ -15,8 +17,8 @@ export const WhatsAppButton = (): JSX.Element => {
   }, [])
 
   const handleWhatsAppClick = (): void => {
-    const phoneNumber = '+213673734578'
-    const message = 'Bonjour! Je suis intéressé(e) par vos services de décoration événementielle.'
+    const phoneNumber = '+213671389113'
+    const message = t.whatsapp.message
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
   }
@@ -31,9 +33,9 @@ export const WhatsAppButton = (): JSX.Element => {
         onClick={handleWhatsAppClick}
         className="rounded-full border border-kitchen-marble-gray bg-kitchen-white-clean/95 px-6 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-kitchen-black-deep shadow-lg backdrop-blur transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
         type="button"
-        aria-label="Discuter sur WhatsApp"
+        aria-label={t.whatsapp.aria}
       >
-        WhatsApp
+        {t.whatsapp.label}
       </button>
     </div>
   )
