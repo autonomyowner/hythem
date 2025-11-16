@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type PillProps = {
   label: string
@@ -33,19 +33,206 @@ function Pill({ label }: PillProps): JSX.Element {
 }
 
 export default function Blueprint(): JSX.Element {
+  const [firstLineDisplayed, setFirstLineDisplayed] = useState<string>('')
+  const [secondLineDisplayed, setSecondLineDisplayed] = useState<string>('')
+  const [isFirstLineComplete, setIsFirstLineComplete] = useState<boolean>(false)
+  const [isSecondLineComplete, setIsSecondLineComplete] = useState<boolean>(false)
+
+  const firstLine = 'The Scaler Blueprint™ - Your'
+  const secondLine = 'First $5,000 Online'
+
+  useEffect(() => {
+    // Type first line
+    let firstIndex = 0
+    let secondTimer: NodeJS.Timeout | null = null
+    let secondTimeout: NodeJS.Timeout | null = null
+    
+    const firstTimer = setInterval(() => {
+      if (firstIndex < firstLine.length) {
+        setFirstLineDisplayed(firstLine.substring(0, firstIndex + 1))
+        firstIndex++
+      } else {
+        clearInterval(firstTimer)
+        setIsFirstLineComplete(true)
+        // Start second line after a short delay
+        secondTimeout = setTimeout(() => {
+          let secondIndex = 0
+          secondTimer = setInterval(() => {
+            if (secondIndex < secondLine.length) {
+              setSecondLineDisplayed(secondLine.substring(0, secondIndex + 1))
+              secondIndex++
+            } else {
+              if (secondTimer) clearInterval(secondTimer)
+              setIsSecondLineComplete(true)
+            }
+          }, 50) // Typing speed for second line
+        }, 300) // Delay before starting second line
+      }
+    }, 50) // Typing speed for first line
+
+    return () => {
+      clearInterval(firstTimer)
+      if (secondTimer) clearInterval(secondTimer)
+      if (secondTimeout) clearTimeout(secondTimeout)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Helper function to render first line with proper styling
+  const renderFirstLine = (text: string) => {
+    if (text.length === 0) return null
+
+    const parts = []
+    let i = 0
+
+    // "The Scaler " - dim
+    if (text.length >= 11) {
+      parts.push(
+        <span key="part-0" className="text-white/60">
+          {text.substring(0, 11)}
+        </span>
+      )
+      i = 11
+    } else {
+      return <span className="text-white/60">{text}</span>
+    }
+
+    // Find "Blueprint"
+    const blueprintStart = text.toLowerCase().indexOf('blueprint', i)
+    if (blueprintStart !== -1 && blueprintStart === i) {
+      const blueprintEnd = Math.min(blueprintStart + 9, text.length)
+      const blueprintText = text.substring(blueprintStart, blueprintEnd)
+      parts.push(
+        <span key="part-1" className="text-white">
+          {blueprintText}
+        </span>
+      )
+      i = blueprintEnd
+
+      // Check for ™ after Blueprint
+      if (i < text.length && text[i] === '™') {
+        parts.push(
+          <sup key="sup-1" className="text-white/70 text-lg sm:text-2xl">
+            ™
+          </sup>
+        )
+        i++
+      }
+
+      // Rest - dim
+      if (i < text.length) {
+        parts.push(
+          <span key="part-2" className="text-white/60">
+            {text.substring(i)}
+          </span>
+        )
+      }
+    } else {
+      // Rest if no Blueprint found
+      if (i < text.length) {
+        parts.push(<span key="part-3" className="text-white/60">{text.substring(i)}</span>)
+      }
+    }
+
+    return <>{parts}</>
+  }
+
+  // Helper function to render second line with proper styling
+  const renderSecondLine = (text: string) => {
+    if (text.length === 0) return null
+
+    const parts = []
+    let i = 0
+
+    // "First " - dim
+    if (text.length >= 6) {
+      parts.push(
+        <span key="part-0" className="text-white/60">
+          {text.substring(0, 6)}
+        </span>
+      )
+      i = 6
+    } else {
+      return <span className="text-white/60">{text}</span>
+    }
+
+    // Find "$5,000"
+    const dollarIndex = text.indexOf('$', i - 1)
+    if (dollarIndex !== -1 && dollarIndex >= i - 1) {
+      // Add any text between "First " and "$"
+      if (dollarIndex > i) {
+        parts.push(
+          <span key="part-1" className="text-white/60">
+            {text.substring(i, dollarIndex)}
+          </span>
+        )
+      }
+
+      // Find end of "$5,000" (numbers and comma)
+      let dollarEnd = dollarIndex + 1
+      while (dollarEnd < text.length && (text[dollarEnd].match(/\d/) || text[dollarEnd] === ',')) {
+        dollarEnd++
+      }
+
+      parts.push(
+        <span key="part-2" className="text-white">
+          {text.substring(dollarIndex, dollarEnd)}
+        </span>
+      )
+      i = dollarEnd
+
+      // Rest - dim
+      if (i < text.length) {
+        parts.push(
+          <span key="part-3" className="text-white/60">
+            {text.substring(i)}
+          </span>
+        )
+      }
+    } else {
+      // Rest if no $ found
+      if (i < text.length) {
+        parts.push(<span key="part-4" className="text-white/60">{text.substring(i)}</span>)
+      }
+    }
+
+    return <>{parts}</>
+  }
+
   return (
     <main className="min-h-screen bg-scaler-blueprint text-white">
       {/* Headings */}
-      <section className="mx-auto max-w-4xl px-4 pb-10 pt-8 text-center sm:px-6 lg:px-8">
-        <h1 className="text-[32px] font-semibold leading-tight text-white/95 sm:text-5xl">
-          Wesh Rah Twelli
-        </h1>
-        <h2 className="mt-2 text-[28px] font-semibold leading-tight text-white/80 sm:text-4xl">
-          T’maitriser Dakhel
-        </h2>
-        <p className="mt-6 text-[28px] italic text-white/90 sm:text-4xl">
-          <span className="opacity-90">The Scaler Blueprint</span>
-        </p>
+      <section className="mx-auto max-w-5xl px-4 pb-10 pt-8 text-center sm:px-6 lg:px-8">
+        {/* Main Title - The Scaler Blueprint™ - Your First $5,000 Online */}
+        <div className="mb-12 space-y-2">
+          <h1 className="text-3xl font-normal leading-tight sm:text-5xl lg:text-6xl">
+            {renderFirstLine(firstLineDisplayed)}
+            {!isFirstLineComplete && (
+              <span className="ml-1 inline-block h-6 w-0.5 animate-pulse bg-white/80 sm:h-8"></span>
+            )}
+          </h1>
+          {isFirstLineComplete && (
+            <h2 className="text-3xl font-normal leading-tight sm:text-5xl lg:text-6xl">
+              {renderSecondLine(secondLineDisplayed)}
+              {!isSecondLineComplete && (
+                <span className="ml-1 inline-block h-6 w-0.5 animate-pulse bg-white/80 sm:h-8"></span>
+              )}
+            </h2>
+          )}
+        </div>
+
+        {/* Secondary Headings */}
+        <div className="space-y-2">
+          <h3 className="text-[32px] font-semibold leading-tight text-white/95 sm:text-5xl">
+            Wesh Rah Twelli
+          </h3>
+          <h4 className="text-[28px] font-semibold leading-tight text-white/80 sm:text-4xl">
+            T&apos;maitriser Dakhel
+          </h4>
+          <p className="mt-6 text-[28px] italic text-white/90 sm:text-4xl">
+            <span className="opacity-90">The Scaler Blueprint</span>
+          </p>
+        </div>
       </section>
 
       {/* Pill sections */}
