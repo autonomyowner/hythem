@@ -96,8 +96,15 @@ export const Navbar = (): JSX.Element => {
           {/* Mobile menu items */}
           {/* Left side - mobile */}
           <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-start gap-1 md:hidden">
-            {/* Social button removed */}
-            {/* No left CTA mobile */}
+            {leftNavItem && (
+              <Link
+                href={leftNavItem.href}
+                className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/90 backdrop-blur-sm transition-all hover:bg-white/20"
+                aria-current={pathname === leftNavItem.href ? 'page' : undefined}
+              >
+                {leftNavItem.label}
+              </Link>
+            )}
           </div>
 
           {/* Right side - mobile */}
