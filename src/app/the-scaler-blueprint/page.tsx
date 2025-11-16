@@ -41,7 +41,7 @@ export default function Blueprint(): JSX.Element {
           Wesh Rah Twelli
         </h1>
         <h2 className="mt-2 text-[28px] font-semibold leading-tight text-white/80 sm:text-4xl">
-          T'maitriser Dakhel
+          T’maitriser Dakhel
         </h2>
         <p className="mt-6 text-[28px] italic text-white/90 sm:text-4xl">
           <span className="opacity-90">The Scaler Blueprint</span>
@@ -71,12 +71,12 @@ export default function Blueprint(): JSX.Element {
           </div>
           <p className="mt-8 text-[15px] leading-7 text-white/85">
             No offense lik… mais, the conventional way tae troh lel université, djouwez men 3 - 10 ans
-            bech ki tekhroudj tekhdem just because you're trying to live someone else's dreams… is a bad way to live life.
+            bech ki tekhroudj tekhdem just because you’re trying to live someone else’s dreams… is a bad way to live life.
           </p>
           <p className="mt-6 text-[15px] leading-7 text-white/85">
-            Donc cette offre est gratuite pour le moment, mais you'll pay later.
+            Donc cette offre est gratuite pour le moment, mais you’ll pay later.
           </p>
-          <p className="mt-6 text-sm font-semibold text-red-400">Don't make that mistake.</p>
+          <p className="mt-6 text-sm font-semibold text-red-400">Don’t make that mistake.</p>
           <div className="mt-8">
             <a
               href="#"
@@ -95,10 +95,10 @@ export default function Blueprint(): JSX.Element {
           <h3 className="mb-6 text-center text-xl font-semibold text-white/90">Frequently Asked Questions</h3>
           <div className="divide-y divide-white/10 rounded-xl border border-white/10 bg-white/5">
             {[
-              'Est-ce que The Scaler Blueprint yeqedrou yedoukhloulou les hommes berk ?',
-              "Est-ce que le programme mekhdoum l'kamel nass ?",
-              "J'arrive pas a comprendre f wesh rah yaaweni ce programme ?",
-              "Est-ce que ki nedkhoul dakhel the program neqder neqra wesh nheb?",
+              'Est‑ce que The Scaler Blueprint yeqedrou yedoukhloulou les hommes berk ?',
+              'Est‑ce que le programme mekhdoum l’kamel nass ?',
+              'J’arrive pas a comprendre f wesh rah yaaweni ce programme ?',
+              'Est‑ce que ki nedkhoul dakhel the program neqder neqra wesh nheb?',
               'Ki nedkhoul fel programme, rah neqra f Telegram wella Google Drive ?',
             ].map(q => (
               <details key={q} className="group">

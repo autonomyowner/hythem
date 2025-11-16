@@ -15,15 +15,15 @@ export const FreeSection = (): JSX.Element => {
             </div>
 
             <p className="mt-10 text-balance text-[15px] leading-7 text-slate-200/90">
-              No offense lik... mais, the conventional way tae troh lel université, djiouwez men 3 - 10 ans bech ki tekhroudj tekhdem just because you're trying to live someone else's dreams... is a bad way to live life.
+              No offense lik... mais, the conventional way tae troh lel université, djiouwez men 3 - 10 ans bech ki tekhroudj tekhdem just because you’re trying to live someone else’s dreams... is a bad way to live life.
             </p>
 
             <p className="mt-6 text-[15px] leading-7 text-slate-200/90">
-              Donc cette offre est gratuite pour le moment, mais you'll pay later.
+              Donc cette offre est gratuite pour le moment, mais you’ll pay later.
             </p>
 
             <p className="mt-8 text-sm font-semibold text-red-400">
-              Don't make that mistake.
+              Don’t make that mistake.
             </p>
 
             <div className="mt-10">

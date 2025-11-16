@@ -13,10 +13,11 @@ export const Navbar = (): JSX.Element => {
   const { language, toggleLanguage } = useLanguage()
   const t = useTranslations()
 
-  const navItems = useMemo(
-    () => [],
-    [],
-  )
+  const navItems = useMemo(() => {
+    return [
+      { label: 'Landing', href: '/' },
+    ]
+  }, [])
 
   // Split menu items: first on left, rest on right
   const leftNavItem = navItems[0]
@@ -39,16 +40,25 @@ export const Navbar = (): JSX.Element => {
       <nav
         className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
           isScrolled
-            ? 'bg-kitchen-white-clean/92 backdrop-blur border-b border-kitchen-marble-gray-light shadow-sm'
+            ? 'bg-white/90 backdrop-blur border-b border-slate-200 shadow-sm'
             : 'bg-transparent'
         }`}
       >
         <div className="mx-auto flex max-w-6xl flex-col px-4 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center md:h-20">
           {/* Left menu item - Desktop only */}
-          <div className="hidden items-start gap-2 md:flex flex-col flex-1">
-            {/* Left utility link removed for clean header */}
-            {/* No left CTA */}
+          <div className="hidden md:flex flex-1">
+            {leftNavItem && (
+              <Link
+                href={leftNavItem.href}
+                className={`text-sm font-medium transition-colors hover:opacity-80 ${
+                  isScrolled ? 'text-slate-900' : 'text-white'
+                }`}
+                aria-current={pathname === leftNavItem.href ? 'page' : undefined}
+              >
+                {leftNavItem.label}
+              </Link>
+            )}
           </div>
 
           {/* Center brand name - Absolutely centered on mobile */}
@@ -58,17 +68,29 @@ export const Navbar = (): JSX.Element => {
               className="transition-opacity duration-200 hover:opacity-80 text-center"
             >
               <span
-                className="text-3xl md:text-4xl lg:text-5xl font-artistic tracking-wide normal-case"
+                className={`text-3xl md:text-4xl lg:text-5xl font-artistic tracking-wide normal-case ${
+                  isScrolled ? 'text-slate-900' : 'text-white'
+                }`}
               >
-                <span className="text-kitchen-black-deep">TenX</span>
+                <span>TenX</span>
               </span>
             </Link>
           </div>
 
           {/* Right menu items - Desktop only */}
-          <div className="hidden items-end gap-2 md:flex flex-col flex-1 justify-end">
-            {/* Social buttons removed for clean header */}
-            {/* No right CTAs */}
+          <div className="hidden md:flex flex-1 justify-end items-center gap-6">
+            {rightNavItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-sm font-medium transition-colors hover:opacity-80 ${
+                  isScrolled ? 'text-slate-900' : 'text-white'
+                }`}
+                aria-current={pathname === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
           {/* Mobile menu items */}
