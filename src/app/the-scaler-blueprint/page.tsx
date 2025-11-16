@@ -119,7 +119,7 @@ export default function Blueprint(): JSX.Element {
 
       {/* Footer */}
       <footer className="px-4 pb-10 text-center text-xs text-white/60 sm:px-6 lg:px-8">
-        All Rights Reserved, All Wrongs Reversed, All Victories Deserved. @ Chems Scales - 2025
+        All Rights Reserved, Tenx
       </footer>
     </main>
   )
