@@ -4,7 +4,6 @@ import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { LanguageProvider } from '@/context/LanguageContext'
-import { SiteFooter } from '@/components/SiteFooter'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,14 +25,12 @@ const greatVibes = Great_Vibes({
 })
 
 export const metadata: Metadata = {
-  title: 'Allouani - Parfums pour Algériens',
-  description:
-    'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
-  keywords:
-    'parfum, parfums de luxe, fragrances authentiques, eau de parfum, parfum original, Bouzareah, parfumerie, fragrances rares, parfums importes',
-  authors: [{ name: 'Allouani' }],
-  creator: 'Allouani',
-  publisher: 'Allouani',
+  title: 'Site',
+  description: 'Clean starter layout.',
+  keywords: 'site, landing',
+  authors: [{ name: 'Site' }],
+  creator: 'Site',
+  publisher: 'Site',
   icons: {
     icon: '/WINTERDZ.png',
     shortcut: '/WINTERDZ.png',
@@ -49,17 +46,16 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Allouani - Parfums pour Algériens',
-    description:
-      'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
+    title: 'Site',
+    description: 'Clean starter layout.',
     url: 'https://brahim-perfum.com',
-    siteName: 'Allouani',
+    siteName: 'Site',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Allouani - Parfums pour Algériens',
+        alt: 'Site',
       },
     ],
     locale: 'fr_DZ',
@@ -67,9 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Allouani - Parfums pour Algériens',
-    description:
-      'Decouvrez notre collection exclusive de parfums de luxe et fragrances authentiques a Bouzareah. Parfums originaux, eaux de parfum haut de gamme et fragrances rares.',
+    title: 'Site',
+    description: 'Clean starter layout.',
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -96,12 +91,11 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${inter.variable} ${playfair.variable} ${greatVibes.variable}`}>
       <body
-        className={`${inter.className} bg-gradient-elegant min-h-screen text-slate-900`}
+        className={`${inter.className} bg-dark-crimson-radial min-h-screen text-slate-100`}
       >
         <LanguageProvider>
           <Navbar />
           <main className="pt-28 md:pt-32 pb-20">{children}</main>
-          <SiteFooter />
           <WhatsAppButton />
         </LanguageProvider>
       </body>

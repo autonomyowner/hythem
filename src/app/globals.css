@@ -58,6 +58,32 @@ a {
   background: linear-gradient(135deg, var(--white-clean), var(--warm-light));
 }
 
+/* Dark crimson/black site-wide background similar to the reference */
+.bg-dark-crimson-radial {
+  background-color: #000000;
+  background-image:
+    radial-gradient(1200px 600px at 50% -10%, rgba(185, 28, 28, 0.45), rgba(185, 28, 28, 0) 60%),
+    radial-gradient(1000px 500px at 50% 120%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+    radial-gradient(800px 400px at -10% 10%, rgba(185, 28, 28, 0.15), rgba(0, 0, 0, 0)),
+    radial-gradient(800px 400px at 110% 10%, rgba(185, 28, 28, 0.15), rgba(0, 0, 0, 0)),
+    linear-gradient(180deg, #0b0b0b 0%, #000000 100%);
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
+}
+
+/* Blueprint page background using provided image */
+.bg-scaler-blueprint {
+  /* Layer a soft crimson glow fallback under the image so it never looks black */
+  background-color: #120a0b;
+  background-image:
+    radial-gradient(60% 45% at 50% 45%, rgba(190, 14, 54, 0.55), rgba(0, 0, 0, 0.0) 60%),
+    radial-gradient(85% 60% at 50% 100%, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95)),
+    url('/the-scaler-bg.jpg');
+  background-position: center, center, center;
+  background-size: cover, cover, cover;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: scroll;
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
