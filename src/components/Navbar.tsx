@@ -68,7 +68,7 @@ export const Navbar = (): JSX.Element => {
               className="transition-opacity duration-200 hover:opacity-80 text-center"
             >
               <span
-                className={`text-3xl md:text-4xl lg:text-5xl font-artistic tracking-wide normal-case ${
+                className={`text-3xl md:text-4xl lg:text-5xl font-brand normal-case ${
                   isScrolled ? 'text-slate-900' : 'text-white'
                 }`}
               >
