@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display, Great_Vibes } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
-import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { LanguageProvider } from '@/context/LanguageContext'
 
 const inter = Inter({
@@ -96,7 +95,6 @@ export default function RootLayout({
         <LanguageProvider>
           <Navbar />
           <main className="pt-28 md:pt-32 pb-20">{children}</main>
-          <WhatsAppButton />
         </LanguageProvider>
       </body>
     </html>
